@@ -1,24 +1,24 @@
 <?php
+// 	This file is part of Diacamma, a software developped by "Le Sanglier du Libre" (http://www.sd-libre.fr)
+// 	Thanks to have payed a retribution for using this module.
 // 
-//     This file is part of Lucterios.
+// 	Diacamma is free software; you can redistribute it and/or modify
+// 	it under the terms of the GNU General Public License as published by
+// 	the Free Software Foundation; either version 2 of the License, or
+// 	(at your option) any later version.
 // 
-//     Lucterios is free software; you can redistribute it and/or modify
-//     it under the terms of the GNU General Public License as published by
-//     the Free Software Foundation; either version 2 of the License, or
-//     (at your option) any later version.
+// 	Diacamma is distributed in the hope that it will be useful,
+// 	but WITHOUT ANY WARRANTY; without even the implied warranty of
+// 	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// 	GNU General Public License for more details.
 // 
-//     Lucterios is distributed in the hope that it will be useful,
-//     but WITHOUT ANY WARRANTY; without even the implied warranty of
-//     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-//     GNU General Public License for more details.
+// 	You should have received a copy of the GNU General Public License
+// 	along with Lucterios; if not, write to the Free Software
+// 	Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 // 
-//     You should have received a copy of the GNU General Public License
-//     along with Lucterios; if not, write to the Free Software
-//     Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
-// 
-// 	Contributeurs: Fanny ALLEAUME, Pierre-Olivier VERSCHOORE, Laurent GAY
-//  // Method file write by SDK tool
-// --- Last modification: Date 21 July 2010 9:07:44 By  ---
+// 		Contributeurs: Fanny ALLEAUME, Pierre-Olivier VERSCHOORE, Laurent GAY
+// Method file write by SDK tool
+// --- Last modification: Date 10 March 2011 0:33:44 By  ---
 
 require_once('CORE/xfer_exception.inc.php');
 require_once('CORE/rights.inc.php');
@@ -37,11 +37,12 @@ function Tasks_APAS_edit(&$self,$posX,$posY,$xfer_result)
 {
 //@CODE_ACTION@
 $xfer_result->setDBObject($self,"title",false,$posY,$posX,2);
-$xfer_result->setDBObject($self,"value",false,$posY++,$posX+3);
-$xfer_result->setDBObject($self,"description",false,$posY++,$posX,4);
+$xfer_result->setDBObject($self,"timeLast",false,$posY,$posX+3);
+$xfer_result->setDBObject($self,"timeTotal",false,$posY++,$posX+5);
+$xfer_result->setDBObject($self,"description",false,$posY++,$posX,6);
 $xfer_result->setDBObject($self,"begin",false,$posY,$posX,2);
-$xfer_result->setDBObject($self,"end",false,$posY++,$posX+3);
-$xfer_result->setDBObject($self,"owner",true,$posY,$posX);
+$xfer_result->setDBObject($self,"owner",true,$posY++,$posX+3);
+$xfer_result->setDBObject($self,"end",false,$posY,$posX,2);
 $xfer_result->removeComponents("owner");
 $sel_list=array('0'=>'');
 $contact_connect=-1;
@@ -61,7 +62,7 @@ if (!isset($sel_list[(int)$self->owner])) {
 	$sel_list[$DBOtherContact->id]=$DBOtherContact->toText();
 }
 $select=new Xfer_Comp_Select("owner");
-$select->setLocation($posX+1,$posY);
+$select->setLocation($posX+4,$posY-1,2);
 $select->setSelect($sel_list);
 $select->setValue($self->owner);
 $type_val='<CHECK>n</CHECK>';
@@ -78,7 +79,7 @@ else {
 $select->setSize(20,200);
 $xfer_result->addComponent($select);
 $bnt=new Xfer_Comp_Button('NewOwer');
-$bnt->setLocation($posX+2,$posY);
+$bnt->setLocation($posX+6,$posY-1,1,2);
 $bnt->setAction($self->NewAction('+','','SelectResp',FORMTYPE_MODAL,CLOSE_YES));
 $xfer_result->addComponent($bnt);
 
