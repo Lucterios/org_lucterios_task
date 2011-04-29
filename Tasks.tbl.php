@@ -18,7 +18,7 @@
 // 
 // 		Contributeurs: Fanny ALLEAUME, Pierre-Olivier VERSCHOORE, Laurent GAY
 // table file write by SDK tool
-// --- Last modification: Date 10 March 2011 0:33:03 By  ---
+// --- Last modification: Date 28 April 2011 20:41:10 By  ---
 
 require_once('CORE/DBObject.inc.php');
 
@@ -46,6 +46,7 @@ class DBObj_org_lucterios_task_Tasks extends DBObj_Basic
 	var $valueGraph;
 	var $__DBMetaDataField=array('title'=>array('description'=>'Titre', 'type'=>2, 'notnull'=>true, 'params'=>array('Size'=>100, 'Multi'=>false)), 'description'=>array('description'=>'Description', 'type'=>7, 'notnull'=>true, 'params'=>array()), 'begin'=>array('description'=>'Début', 'type'=>4, 'notnull'=>true, 'params'=>array()), 'end'=>array('description'=>'Fin', 'type'=>4, 'notnull'=>true, 'params'=>array()), 'owner'=>array('description'=>'Responsable', 'type'=>10, 'notnull'=>false, 'params'=>array('TableName'=>'org_lucterios_contacts_personnePhysique')), 'timeLast'=>array('description'=>'Durée restante (h)', 'type'=>0, 'notnull'=>true, 'params'=>array('Min'=>0, 'Max'=>10000)), 'timeTotal'=>array('description'=>'Durée totale (h)', 'type'=>0, 'notnull'=>true, 'params'=>array('Min'=>0, 'Max'=>10000)), 'value'=>array('description'=>'Progression', 'type'=>11, 'notnull'=>true, 'params'=>array('Function'=>'org_lucterios_task_FCT_Tasks_APAS_getValue', 'NbField'=>1)), 'type'=>array('description'=>'Privé', 'type'=>3, 'notnull'=>true, 'params'=>array()), 'valueGraph'=>array('description'=>'Progression', 'type'=>12, 'notnull'=>false, 'params'=>array('MethodGet'=>'getValueGraph', 'MethodSet'=>'')));
 
+	var $__toText='$title';
 }
 
 ?>
