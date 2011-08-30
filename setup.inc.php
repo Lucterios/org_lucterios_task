@@ -18,7 +18,7 @@
 // 
 // 		Contributeurs: Fanny ALLEAUME, Pierre-Olivier VERSCHOORE, Laurent GAY
 // setup file write by SDK tool
-// --- Last modification: Date 23 June 2011 11:45:05 By  ---
+// --- Last modification: Date 29 August 2011 23:24:02 By  ---
 
 $extention_name="org_lucterios_task";
 $extention_description="Modules de gestion de taches de travail et de leur évolution.";
@@ -29,7 +29,7 @@ $extension_libre=true;
 
 $version_max=1;
 $version_min=1;
-$version_release=1;
+$version_release=2;
 $version_build=254;
 
 $depencies=array();
