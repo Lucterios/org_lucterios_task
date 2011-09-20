@@ -18,7 +18,7 @@
 // 
 // 		Contributeurs: Fanny ALLEAUME, Pierre-Olivier VERSCHOORE, Laurent GAY
 // setup file write by SDK tool
-// --- Last modification: Date 29 August 2011 23:24:02 By  ---
+// --- Last modification: Date 19 September 2011 12:19:13 By  ---
 
 $extention_name="org_lucterios_task";
 $extention_description="Modules de gestion de taches de travail et de leur évolution.";
@@ -30,7 +30,7 @@ $extension_libre=true;
 $version_max=1;
 $version_min=1;
 $version_release=2;
-$version_build=254;
+$version_build=255;
 
 $depencies=array();
 $depencies[0] = new Param_Depencies("CORE", 1, 2, 1, 2, false);
@@ -45,7 +45,7 @@ $rights[3] = new Param_Rigth("Administrer",90);
 $menus=array();
 $menus[0] = new Param_Menu("Gestion de taches", "Bureautique", "", "task.png", "", 30 , 0, "Gestionnaire de taches");
 $menus[1] = new Param_Menu("Liste des taches", "Gestion de taches", "Tasks_APAS_List", "task.png", "", 10 , 0, "Gère la situation des taches.");
-$menus[2] = new Param_Menu("Recherche de taches", "Gestion de taches", "Tasks_APAS_Search", "tasksearch.png", "", 20 , 0, "Recherche une tache suivant des critères.");
+$menus[2] = new Param_Menu("Recherche de taches", "Gestion de taches", "Tasks_APAS_Search", "tasksearch.png", "", 20 , 1, "Recherche une tache suivant des critères.");
 
 $actions=array();
 $actions[0] = new Param_Action("Valider une tache", "Tasks_APAS_AddModifyAct", 1);
