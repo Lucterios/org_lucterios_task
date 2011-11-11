@@ -17,32 +17,28 @@
 // 	Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 // 
 // 		Contributeurs: Fanny ALLEAUME, Pierre-Olivier VERSCHOORE, Laurent GAY// Method file write by SDK tool
-// --- Last modification: Date 10 November 2011 6:13:15 By  ---
+// --- Last modification: Date 10 November 2011 4:43:59 By  ---
 
 require_once('CORE/xfer_exception.inc.php');
 require_once('CORE/rights.inc.php');
 
 //@TABLES@
-require_once('extensions/org_lucterios_task/Tasks.tbl.php');
+require_once('extensions/org_lucterios_task/Project.tbl.php');
 //@TABLES@
 
-//@DESC@Voir un tache
-//@PARAM@ posX
-//@PARAM@ posY
-//@PARAM@ xfer_result
+//@DESC@getList de projects
+//@PARAM@ Params
 
-function Tasks_APAS_show(&$self,$posX,$posY,$xfer_result)
+function Project_APAS_getGrid(&$self,$Params)
 {
 //@CODE_ACTION@
-$xfer_result->setDBObject($self,"title",true,$posY++,$posX,3);
-$xfer_result->setDBObject($self,"valueGraph",true,$posY++,$posX,3);
-$xfer_result->setDBObject($self,"description",true,$posY++,$posX,3);
-$xfer_result->setDBObject($self,"begin",true,$posY,$posX);
-$xfer_result->setDBObject($self,"end",true,$posY++,$posX+2);
-$xfer_result->setDBObject($self,"owner",true,$posY,$posX);
-$xfer_result->setDBObject($self,"type",true,$posY++,$posX+2);
-$xfer_result->setDBObject($self,"rappel",true,$posY++,$posX,2);
-return $xfer_result;
+$grid = new Xfer_Comp_Grid("Project");
+$grid->setDBObject($self, array("nom","description","progression","end"),"",$Params);
+$grid->addAction($self->newAction("_Editer", "edit.png", "Fiche", FORMTYPE_MODAL,CLOSE_NO, SELECT_SINGLE));
+$grid->addAction($self->newAction("_Supprimer", "suppr.png", "Del", FORMTYPE_MODAL,CLOSE_NO, SELECT_SINGLE));
+$grid->addAction($self->newAction("_Ajouter", "add.png", "AddModify",FORMTYPE_MODAL,CLOSE_NO, SELECT_NONE));
+$grid->setSize(200,750);
+return $grid;
 //@CODE_ACTION@
 }
 

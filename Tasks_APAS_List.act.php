@@ -1,24 +1,23 @@
 <?php
+// 	This file is part of Lucterios/Diacamma, a software developped by "Le Sanglier du Libre" (http://www.sd-libre.fr)
+// 	Thanks to have payed a retribution for using this module.
 // 
-//     This file is part of Lucterios.
+// 	Lucterios/Diacamma is free software; you can redistribute it and/or modify
+// 	it under the terms of the GNU General Public License as published by
+// 	the Free Software Foundation; either version 2 of the License, or
+// 	(at your option) any later version.
 // 
-//     Lucterios is free software; you can redistribute it and/or modify
-//     it under the terms of the GNU General Public License as published by
-//     the Free Software Foundation; either version 2 of the License, or
-//     (at your option) any later version.
+// 	Lucterios/Diacamma is distributed in the hope that it will be useful,
+// 	but WITHOUT ANY WARRANTY; without even the implied warranty of
+// 	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// 	GNU General Public License for more details.
 // 
-//     Lucterios is distributed in the hope that it will be useful,
-//     but WITHOUT ANY WARRANTY; without even the implied warranty of
-//     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-//     GNU General Public License for more details.
+// 	You should have received a copy of the GNU General Public License
+// 	along with Lucterios; if not, write to the Free Software
+// 	Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 // 
-//     You should have received a copy of the GNU General Public License
-//     along with Lucterios; if not, write to the Free Software
-//     Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
-// 
-// 	Contributeurs: Fanny ALLEAUME, Pierre-Olivier VERSCHOORE, Laurent GAY
-//  // Action file write by SDK tool
-// --- Last modification: Date 20 July 2010 8:41:27 By  ---
+// 		Contributeurs: Fanny ALLEAUME, Pierre-Olivier VERSCHOORE, Laurent GAY// Action file write by SDK tool
+// --- Last modification: Date 10 November 2011 5:42:11 By  ---
 
 require_once('CORE/xfer_exception.inc.php');
 require_once('CORE/rights.inc.php');
@@ -61,8 +60,9 @@ if ($IsSearch!=0) {
 	if ($contact->findConnected()) {
 		$q.=" OR (owner=".$contact->id.")";
 	}
-	$self->setForSearch($Params,'end DESC',$q);
-	$lbl->setValue("{[center]}{[bold]}Résultat de la recherche{[/bold]}{[/center]}");
+	$self->setForSearch($Params,'projet,end',$q);
+	include_once("CORE/DBFind.inc.php");
+	$lbl->setValue("{[center]}{[bold]}Résultat de la recherche{[/bold]}{[newline]}{[newline]}".DBFind::getCriteriaText($self,$Params)."{[/center]}");
 }
 else {
 	$lbl->setValue("{[center]}{[bold]}Liste des taches{[/bold]}{[/center]}");
@@ -78,7 +78,7 @@ else {
 	$edt->setAction($self->NewAction('','','List',FORMTYPE_REFRESH,CLOSE_NO));
 	$xfer_result->addComponent($edt);
 }
-$grid = $self->getGrid($Params);
+$grid = $self->getGrid($Params,1);
 $grid->setLocation(0,1,2);
 $xfer_result->addComponent($grid);
 $lbl=new Xfer_Comp_LabelForm("nb");

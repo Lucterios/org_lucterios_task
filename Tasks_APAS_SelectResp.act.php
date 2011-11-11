@@ -54,7 +54,7 @@ $img->setLocation(0,0);
 $img->setValue("extensions/org_lucterios_contacts/images/contacts.png");
 $xfer_result->addComponent($img);
 $lbl=new  Xfer_Comp_LabelForm("titre");
-$lbl->setLocation(1,0,2);
+$lbl->setLocation(1,0,5);
 $xfer_result->addComponent($lbl);
 $lbl->setValue("{[newline]}{[center]}{[bold]}Rechercher et séléctionnez un contact responsable{[/bold]}{[/center]}");
 
@@ -62,24 +62,13 @@ $xfer_result->classRoot='org_lucterios_contacts/personnePhysique';
 $DBcontact=new DBObj_org_lucterios_contacts_personnePhysique;
 $xfer_result=$DBcontact->searchContact(1, $xfer_result);
 
-$btn=new Xfer_Comp_Button('refresh');
-$btn->setLocation(0,49,3);
-$btn->setAction(new Xfer_Action('_Rafraichir le fitrage','',$xfer_result->m_extension,$xfer_result->m_action,FORMTYPE_REFRESH,CLOSE_NO,SELECT_NONE));
-$xfer_result->addComponent($btn);
-
-$lbl=new Xfer_Comp_LabelForm("list");
-$lbl->setLocation(0,50,3);
-$xfer_result->addComponent($lbl);
-
 List($grid,$search_title)=$DBcontact->contactFoundGrid($classname,$Params);
-$grid->setLocation(0,51,3);
+$grid->setLocation(0,51,5);
 $grid->addAction($self->NewAction('_Selectionner','ok.png','SelectRespVal',FORMTYPE_MODAL,CLOSE_YES,SELECT_SINGLE),0);
 $grid->addAction($self->NewAction("_Annuler", "cancel.png",'AddModify',FORMTYPE_MODAL,CLOSE_YES));
 
-$lbl->setValue("{[bold]}{[center]}Liste [{[italic]}$search_title{[/italic]}]{[/center]}{[/bold]}");
-
 $lbl = new Xfer_Comp_LabelForm("nb");
-$lbl->setLocation(0,60,2);
+$lbl->setLocation(0,60,5);
 $lbl->setValue("Nombre total : ".$grid->mNbLines);
 $xfer_result->addComponent($lbl);
 

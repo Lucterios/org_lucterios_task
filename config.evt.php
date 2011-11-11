@@ -22,7 +22,7 @@
 
 //@BEGIN@
 
-function org_lucterios_task_config(&$xfer_result)
+function org_lucterios_task_APAS_config(&$xfer_result)
 {
 // Fonction pour ajouter des composants dans la fenêtre de configuration
 }

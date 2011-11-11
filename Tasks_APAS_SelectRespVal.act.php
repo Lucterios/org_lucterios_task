@@ -50,10 +50,7 @@ try {
 $xfer_result=&new Xfer_Container_Acknowledge("org_lucterios_task","Tasks_APAS_SelectRespVal",$Params);
 $xfer_result->Caption="Selectionner d'un contact comme responsable";
 //@CODE_ACTION@
-list($ext_name,$table_name) = split('/',$classname);
-$table_name = trim($table_name);
-$file="extensions/$ext_name/$table_name.tbl.php";
-$class_name="DBObj_".$ext_name."_".$table_name;
+list($file,$class_name) = DBObj_Abstract::getTableAndClass($classname);
 include_once $file;
 $DBContact=new $class_name;
 $DBContact->get($contact);

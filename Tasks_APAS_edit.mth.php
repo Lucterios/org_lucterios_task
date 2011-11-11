@@ -1,13 +1,13 @@
 <?php
-// 	This file is part of Diacamma, a software developped by "Le Sanglier du Libre" (http://www.sd-libre.fr)
+// 	This file is part of Lucterios/Diacamma, a software developped by "Le Sanglier du Libre" (http://www.sd-libre.fr)
 // 	Thanks to have payed a retribution for using this module.
 // 
-// 	Diacamma is free software; you can redistribute it and/or modify
+// 	Lucterios/Diacamma is free software; you can redistribute it and/or modify
 // 	it under the terms of the GNU General Public License as published by
 // 	the Free Software Foundation; either version 2 of the License, or
 // 	(at your option) any later version.
 // 
-// 	Diacamma is distributed in the hope that it will be useful,
+// 	Lucterios/Diacamma is distributed in the hope that it will be useful,
 // 	but WITHOUT ANY WARRANTY; without even the implied warranty of
 // 	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // 	GNU General Public License for more details.
@@ -16,9 +16,8 @@
 // 	along with Lucterios; if not, write to the Free Software
 // 	Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 // 
-// 		Contributeurs: Fanny ALLEAUME, Pierre-Olivier VERSCHOORE, Laurent GAY
-// Method file write by SDK tool
-// --- Last modification: Date 10 March 2011 0:33:44 By  ---
+// 		Contributeurs: Fanny ALLEAUME, Pierre-Olivier VERSCHOORE, Laurent GAY// Method file write by SDK tool
+// --- Last modification: Date 10 November 2011 6:13:06 By  ---
 
 require_once('CORE/xfer_exception.inc.php');
 require_once('CORE/rights.inc.php');
@@ -61,12 +60,24 @@ if (!isset($sel_list[(int)$self->owner])) {
 	$DBOtherContact->get($self->owner);
 	$sel_list[$DBOtherContact->id]=$DBOtherContact->toText();
 }
-$select=new Xfer_Comp_Select("owner");
-$select->setLocation($posX+4,$posY-1,2);
-$select->setSelect($sel_list);
-$select->setValue($self->owner);
-$type_val='<CHECK>n</CHECK>';
-$select->JavaScript="
+$select_owner=new Xfer_Comp_Select("owner");
+$select_owner->setLocation($posX+4,$posY-1,2);
+$select_owner->setSelect($sel_list);
+$select_owner->setValue($self->owner);
+$select_owner->setSize(20,200);
+$xfer_result->addComponent($select_owner);
+$bnt=new Xfer_Comp_Button('NewOwer');
+$bnt->setLocation($posX+6,$posY-1,1,2);
+$bnt->setAction($self->NewAction('+','','SelectResp',FORMTYPE_MODAL,CLOSE_YES));
+$xfer_result->addComponent($bnt);
+
+if ($self->projet>0) {
+	$xfer_result->setDBObject($self,"projet",false,$posY++,$posX+3,2);
+}
+else {
+	$xfer_result->setDBObject($self,"type",false,$posY++,$posX+3);
+	$type_val='<CHECK>n</CHECK>';
+	$select_owner->JavaScript="
 var owner=current.getValue();
 if (owner!=$contact_connect) {
 	parent.get('type').setEnabled(false);
@@ -76,14 +87,8 @@ else {
 	parent.get('type').setEnabled(true);
 }
 ";
-$select->setSize(20,200);
-$xfer_result->addComponent($select);
-$bnt=new Xfer_Comp_Button('NewOwer');
-$bnt->setLocation($posX+6,$posY-1,1,2);
-$bnt->setAction($self->NewAction('+','','SelectResp',FORMTYPE_MODAL,CLOSE_YES));
-$xfer_result->addComponent($bnt);
-
-$xfer_result->setDBObject($self,"type",false,$posY++,$posX+3);
+}
+$xfer_result->setDBObject($self,"rappel",false,$posY++,$posX,2);
 return $xfer_result;
 //@CODE_ACTION@
 }

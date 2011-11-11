@@ -17,59 +17,52 @@
 // 	Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 // 
 // 		Contributeurs: Fanny ALLEAUME, Pierre-Olivier VERSCHOORE, Laurent GAY// Action file write by SDK tool
-// --- Last modification: Date 10 November 2011 6:04:25 By  ---
+// --- Last modification: Date 10 November 2011 3:52:02 By  ---
 
 require_once('CORE/xfer_exception.inc.php');
 require_once('CORE/rights.inc.php');
 
 //@TABLES@
-require_once('extensions/org_lucterios_task/Tasks.tbl.php');
+require_once('extensions/org_lucterios_task/Project.tbl.php');
 //@TABLES@
 //@XFER:custom
 require_once('CORE/xfer_custom.inc.php');
 //@XFER:custom@
 
 
-//@DESC@Ajouter/Modifier une tache
-//@PARAM@ Project=0
-//@INDEX:task
+//@DESC@Fiche d'un project
+//@PARAM@ 
+//@INDEX:Project
 
 
 //@LOCK:2
 
-function Tasks_APAS_AddModify($Params)
+function Project_APAS_Fiche($Params)
 {
-$Project=getParams($Params,"Project",0);
-$self=new DBObj_org_lucterios_task_Tasks();
-$task=getParams($Params,"task",-1);
-if ($task>=0) $self->get($task);
+$self=new DBObj_org_lucterios_task_Project();
+$Project=getParams($Params,"Project",-1);
+if ($Project>=0) $self->get($Project);
 
-$self->lockRecord("Tasks_APAS_AddModify");
+$self->lockRecord("Project_APAS_Fiche");
 try {
-$xfer_result=&new Xfer_Container_Custom("org_lucterios_task","Tasks_APAS_AddModify",$Params);
-$xfer_result->Caption="Ajouter/Modifier une tache";
-$xfer_result->m_context['ORIGINE']="Tasks_APAS_AddModify";
+$xfer_result=&new Xfer_Container_Custom("org_lucterios_task","Project_APAS_Fiche",$Params);
+$xfer_result->Caption="Fiche d'un project";
+$xfer_result->m_context['ORIGINE']="Project_APAS_Fiche";
 $xfer_result->m_context['TABLE_NAME']=$self->__table;
 $xfer_result->m_context['RECORD_ID']=$self->id;
 //@CODE_ACTION@
-if ($self->id>0)
-	$xfer_result->Caption="Modifier une tache";
-else
-	$xfer_result->Caption="Ajouter une tache";
 $img=new Xfer_Comp_Image("img");
 $img->setLocation(0,0,1,5);
-$img->setValue("task.png");
+$img->setValue("project.png");
 $xfer_result->addComponent($img);
-$self->setFrom($Params);
-if ($Project>0)
-	$self->projet=$Project;
-$xfer_result=$self->edit(1,0,$xfer_result);
-$xfer_result->addAction($self->newAction("_Ok", "ok.png", "AddModifyAct",FORMTYPE_MODAL,CLOSE_YES));
-$xfer_result->addAction(new Xfer_Action("_Annuler", "cancel.png"));
+$xfer_result=$self->show(1,0,$xfer_result);
+$xfer_result->addAction($self->newAction("_Modifier", "edit.png", "AddModify", FORMTYPE_MODAL,CLOSE_YES));
+$xfer_result->addAction($self->newAction("_Imprimer", "print.png", "PrintFile", FORMTYPE_MODAL,CLOSE_NO));
+$xfer_result->addAction(new Xfer_Action("_Fermer", "close.png"));
 //@CODE_ACTION@
 	$xfer_result->setCloseAction(new Xfer_Action('unlock','','CORE','UNLOCK',FORMTYPE_MODAL,CLOSE_YES,SELECT_NONE));
 }catch(Exception $e) {
-	$self->unlockRecord("Tasks_APAS_AddModify");
+	$self->unlockRecord("Project_APAS_Fiche");
 	throw $e;
 }
 return $xfer_result;

@@ -16,33 +16,30 @@
 // 	along with Lucterios; if not, write to the Free Software
 // 	Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 // 
-// 		Contributeurs: Fanny ALLEAUME, Pierre-Olivier VERSCHOORE, Laurent GAY// Method file write by SDK tool
-// --- Last modification: Date 10 November 2011 6:13:15 By  ---
+// 		Contributeurs: Fanny ALLEAUME, Pierre-Olivier VERSCHOORE, Laurent GAY// Event file write by SDK tool
+// --- Last modification: Date 10 November 2011 6:44:07 By  ---
 
 require_once('CORE/xfer_exception.inc.php');
 require_once('CORE/rights.inc.php');
 
 //@TABLES@
 require_once('extensions/org_lucterios_task/Tasks.tbl.php');
+require_once('extensions/org_lucterios_contacts/personneMorale.tbl.php');
 //@TABLES@
 
-//@DESC@Voir un tache
-//@PARAM@ posX
-//@PARAM@ posY
-//@PARAM@ xfer_result
+//@DESC@Evenement relatif au signal 'Evenement lancer régulièrement par CRON' de 'CORE'
+//@PARAM@ logContent
 
-function Tasks_APAS_show(&$self,$posX,$posY,$xfer_result)
+function org_lucterios_task_APAS_TIME_EVENT(&$logContent)
 {
 //@CODE_ACTION@
-$xfer_result->setDBObject($self,"title",true,$posY++,$posX,3);
-$xfer_result->setDBObject($self,"valueGraph",true,$posY++,$posX,3);
-$xfer_result->setDBObject($self,"description",true,$posY++,$posX,3);
-$xfer_result->setDBObject($self,"begin",true,$posY,$posX);
-$xfer_result->setDBObject($self,"end",true,$posY++,$posX+2);
-$xfer_result->setDBObject($self,"owner",true,$posY,$posX);
-$xfer_result->setDBObject($self,"type",true,$posY++,$posX+2);
-$xfer_result->setDBObject($self,"rappel",true,$posY++,$posX,2);
-return $xfer_result;
+$Q="SELECT * FROM org_lucterios_task_Tasks WHERE rappel>0 AND timeLast>0 AND ((TO_DAYS(end)-TO_DAYS(now()))<=rappel)";
+$DBTask=new DBObj_org_lucterios_task_Tasks;
+$DBTask->query($Q);
+while ($DBTask->fetch()) {
+	$ret=$DBTask->envoyerRappel();
+	$logContent.="Rappel de la tache '".$DBTask->toText()."' : $ret\n";
+}
 //@CODE_ACTION@
 }
 

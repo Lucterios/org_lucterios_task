@@ -22,7 +22,7 @@
 
 //@BEGIN@
 
-function org_lucterios_task_status(&$result)
+function org_lucterios_task_APAS_status(&$result)
 {
 // Fonction pour ajouter une information dans la fenêtre de résumé
 }

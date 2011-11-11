@@ -54,7 +54,7 @@ imagepng($im,$file_temp);
 $file_size = filesize($file_temp);
 $handle = fopen($file_temp,'r');
 $img = fread($handle,$file_size);
-$img_base64 = chunk_split(base64_encode($img));
+$img_base64 = chunk_explode(base64_encode($img));
 fclose($handle);
 
 @unlink($file_temp);
@@ -62,7 +62,6 @@ return "data:image/*;base64,".$img_base64;*/
 
 $val=(float)$self->value;
 $val_based=ceil(25.0*$val/100.0);
-echo "<!-- value:".$self->value." / val=$val / val_based=$val_based -->";
 $text=str_pad($self->value."% ",5,"#",STR_PAD_LEFT);
 $text=str_replace('#','&#160;',$text);
 $text.="{[bold]}{[font color='green']}".str_repeat('|',$val_based)."{[/font]}";

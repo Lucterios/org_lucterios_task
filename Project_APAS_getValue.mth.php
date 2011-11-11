@@ -17,32 +17,33 @@
 // 	Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 // 
 // 		Contributeurs: Fanny ALLEAUME, Pierre-Olivier VERSCHOORE, Laurent GAY// Method file write by SDK tool
-// --- Last modification: Date 10 November 2011 6:13:15 By  ---
+// --- Last modification: Date 10 November 2011 4:36:26 By  ---
 
 require_once('CORE/xfer_exception.inc.php');
 require_once('CORE/rights.inc.php');
 
 //@TABLES@
-require_once('extensions/org_lucterios_task/Tasks.tbl.php');
+require_once('extensions/org_lucterios_task/Project.tbl.php');
 //@TABLES@
 
-//@DESC@Voir un tache
-//@PARAM@ posX
-//@PARAM@ posY
-//@PARAM@ xfer_result
+//@DESC@
+//@PARAM@ 
 
-function Tasks_APAS_show(&$self,$posX,$posY,$xfer_result)
+function Project_APAS_getValue(&$self)
 {
 //@CODE_ACTION@
-$xfer_result->setDBObject($self,"title",true,$posY++,$posX,3);
-$xfer_result->setDBObject($self,"valueGraph",true,$posY++,$posX,3);
-$xfer_result->setDBObject($self,"description",true,$posY++,$posX,3);
-$xfer_result->setDBObject($self,"begin",true,$posY,$posX);
-$xfer_result->setDBObject($self,"end",true,$posY++,$posX+2);
-$xfer_result->setDBObject($self,"owner",true,$posY,$posX);
-$xfer_result->setDBObject($self,"type",true,$posY++,$posX+2);
-$xfer_result->setDBObject($self,"rappel",true,$posY++,$posX,2);
-return $xfer_result;
+$last=(float)$self->timeLast;
+$total=(float)$self->timeTotal;
+$val=ceil(10000*($total-$last)/$total)/100;
+$val_based=ceil(25.0*$val/100.0);
+$text=str_pad($val."% ",5,"#",STR_PAD_LEFT);
+$text=str_replace('#','&#160;',$text);
+$text.="{[bold]}{[font color='green']}".str_repeat('|',$val_based)."{[/font]}";
+$text.="{[font color='white']}".str_repeat('|',25-$val_based)."{[/font]}{[/bold]} ";
+$text_last=str_pad($self->timeLast."h",3,"#",STR_PAD_LEFT);
+$text_last=str_replace('#','&#160;',$text_last);
+$text.=$text_last;
+return $text;
 //@CODE_ACTION@
 }
 

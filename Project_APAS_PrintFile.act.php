@@ -16,34 +16,46 @@
 // 	along with Lucterios; if not, write to the Free Software
 // 	Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 // 
-// 		Contributeurs: Fanny ALLEAUME, Pierre-Olivier VERSCHOORE, Laurent GAY// Method file write by SDK tool
-// --- Last modification: Date 10 November 2011 6:13:15 By  ---
+// 		Contributeurs: Fanny ALLEAUME, Pierre-Olivier VERSCHOORE, Laurent GAY// Action file write by SDK tool
+// --- Last modification: Date 10 November 2011 2:37:39 By  ---
 
 require_once('CORE/xfer_exception.inc.php');
 require_once('CORE/rights.inc.php');
 
 //@TABLES@
-require_once('extensions/org_lucterios_task/Tasks.tbl.php');
+require_once('extensions/org_lucterios_task/Project.tbl.php');
 //@TABLES@
+//@XFER:print
+require_once('CORE/xfer_printing.inc.php');
+//@XFER:print@
 
-//@DESC@Voir un tache
-//@PARAM@ posX
-//@PARAM@ posY
-//@PARAM@ xfer_result
 
-function Tasks_APAS_show(&$self,$posX,$posY,$xfer_result)
+//@DESC@Imprimer un project
+//@INDEX:Project
+
+
+//@LOCK:0
+
+function Project_APAS_PrintFile($Params)
 {
+$self=new DBObj_org_lucterios_task_Project();
+$Project=getParams($Params,"Project",-1);
+if ($Project>=0) $self->get($Project);
+try {
+$xfer_result=&new Xfer_Container_Print("org_lucterios_task","Project_APAS_PrintFile",$Params);
+$xfer_result->Caption="Imprimer un project";
 //@CODE_ACTION@
-$xfer_result->setDBObject($self,"title",true,$posY++,$posX,3);
-$xfer_result->setDBObject($self,"valueGraph",true,$posY++,$posX,3);
-$xfer_result->setDBObject($self,"description",true,$posY++,$posX,3);
-$xfer_result->setDBObject($self,"begin",true,$posY,$posX);
-$xfer_result->setDBObject($self,"end",true,$posY++,$posX+2);
-$xfer_result->setDBObject($self,"owner",true,$posY,$posX);
-$xfer_result->setDBObject($self,"type",true,$posY++,$posX+2);
-$xfer_result->setDBObject($self,"rappel",true,$posY++,$posX,2);
+require_once "CORE/PrintAction.inc.php";
+$print_action=new PrintAction("org_lucterios_task","Project_APAS_PrintFile",$Params);
+$print_action->TabChangePage=false;
+$print_action->Extended=false;
+$print_action->Title="Fiche descriptive";
+$xfer_result->printListing($print_action);
+//@CODE_ACTION@
+}catch(Exception $e) {
+	throw $e;
+}
 return $xfer_result;
-//@CODE_ACTION@
 }
 
 ?>

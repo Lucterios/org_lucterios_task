@@ -17,34 +17,15 @@
 // 	Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 // 
 // 		Contributeurs: Fanny ALLEAUME, Pierre-Olivier VERSCHOORE, Laurent GAY
-// Method file write by SDK tool
-// --- Last modification: Date 10 March 2011 0:09:19 By  ---
+// library file write by SDK tool
+// --- Last modification: Date 11 March 2011 18:46:05 By  ---
 
-require_once('CORE/xfer_exception.inc.php');
-require_once('CORE/rights.inc.php');
-
-//@TABLES@
-require_once('extensions/org_lucterios_task/Tasks.tbl.php');
-//@TABLES@
-
-//@DESC@Recherche un tache
-//@PARAM@ posY
-//@PARAM@ simple
-//@PARAM@ xfer_result
-
-function Tasks_APAS_finder(&$self,$posY,$simple,$xfer_result)
-{
-//@CODE_ACTION@
-$xfer_result->setDBSearch($self,"title",$posY++);
-$xfer_result->setDBSearch($self,"description",$posY++);
-$xfer_result->setDBSearch($self,"begin",$posY++);
-$xfer_result->setDBSearch($self,"end",$posY++);
-$xfer_result->setDBSearch($self,"timeLast",$posY++);
-$xfer_result->setDBSearch($self,"timeTotal",$posY++);
-$xfer_result->setDBSearch($self,"owner[nom]",$posY++);
-$xfer_result->setDBSearch($self,"type",$posY++);
-return $xfer_result;
-//@CODE_ACTION@
+//@BEGIN@
+function org_lucterios_task_APAS_menuTab(&$menuTabs,$xfer){
+	$new_Menu=new Xfer_Menu_Item("menu_taches",'Taches courantes','task.png','org_lucterios_task',"menuTab",0,"","");
+	if ($xfer->checkActionRigth($new_Menu))
+		$menuTabs->addSubMenu($new_Menu);
+	return true;
 }
-
+//@END@
 ?>
