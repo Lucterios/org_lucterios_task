@@ -17,12 +17,13 @@
 // 	Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 // 
 // 		Contributeurs: Fanny ALLEAUME, Pierre-Olivier VERSCHOORE, Laurent GAY// Method file write by SDK tool
-// --- Last modification: Date 10 November 2011 6:57:44 By  ---
+// --- Last modification: Date 18 November 2011 5:05:21 By  ---
 
 require_once('CORE/xfer_exception.inc.php');
 require_once('CORE/rights.inc.php');
 
 //@TABLES@
+require_once('CORE/extension_params.tbl.php');
 require_once('extensions/org_lucterios_contacts/personneMorale.tbl.php');
 require_once('extensions/org_lucterios_task/Tasks.tbl.php');
 //@TABLES@
@@ -40,21 +41,33 @@ $self->update();
 $Moral=new DBObj_org_lucterios_contacts_personneMorale;
 $Moral->get(1);
 $from=$Moral->mail;
+$mail=$from;
+$resp=$Moral->toText();
 if ($self->owner>0) {
 	$owner=$self->getField("owner");
 	$mail=$owner->mail;
+	$resp=$owner->toText();
 }
-else {
-	$mail=$from;
-}
-$ret="Courriel:$mail ";
+
+$DBParam=new DBObj_CORE_extension_params;
+$params=$DBParam->getParameters("org_lucterios_task");
+
+$body=$params['messageRappel'];
+$body=str_replace(array('##RESP##','##NUM##'),array($resp,$self->toText()),$body);
+$body.='{[newline]}';
+$body.=$Moral->toText().'{[newline]}';
+$body.=$Moral->adresse.'{[newline]}';
+$body.=$Moral->codePostal." ".$Moral->ville.'{[newline]}';
+$body.=$Moral->mail.'{[newline]}';
+
 require_once('extensions/org_lucterios_contacts/mailerFunctions.inc.php');
 if (willMailSend() && ($mail!='')) {
-	$body="";
 	sendEMail($from,$mail,"Rappel de la tache'".$self->toText()."'",$body);
 }
-else
+else {
+	logAutre("sendEMail('$from','$mail','Rappel de la tache','$body')");
 	$ret.=" - Envoie impossible";
+}
 
 return $ret;
 //@CODE_ACTION@

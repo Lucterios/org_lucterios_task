@@ -23,41 +23,41 @@ require_once('CORE/xfer_exception.inc.php');
 require_once('CORE/rights.inc.php');
 
 //@TABLES@
-require_once('extensions/org_lucterios_task/Project.tbl.php');
+require_once('extensions/org_lucterios_task/Organisation.tbl.php');
 //@TABLES@
 //@XFER:acknowledge
 require_once('CORE/xfer.inc.php');
 //@XFER:acknowledge@
 
 
-//@DESC@Valider un project
-//@PARAM@ Project
+//@DESC@Valider une organisation
+//@PARAM@ Organisation
 
 //@TRANSACTION:
 
 //@LOCK:0
 
-function Project_APAS_AddModifyAct($Params)
+function Organisation_APAS_AddModifyAct($Params)
 {
-if (($ret=checkParams("org_lucterios_task", "Project_APAS_AddModifyAct",$Params ,"Project"))!=null)
+if (($ret=checkParams("org_lucterios_task", "Organisation_APAS_AddModifyAct",$Params ,"Organisation"))!=null)
 	return $ret;
-$Project=getParams($Params,"Project",0);
-$self=new DBObj_org_lucterios_task_Project();
+$Organisation=getParams($Params,"Organisation",0);
+$self=new DBObj_org_lucterios_task_Organisation();
 
 global $connect;
 $connect->begin();
 try {
-$xfer_result=&new Xfer_Container_Acknowledge("org_lucterios_task","Project_APAS_AddModifyAct",$Params);
-$xfer_result->Caption="Valider un project";
+$xfer_result=&new Xfer_Container_Acknowledge("org_lucterios_task","Organisation_APAS_AddModifyAct",$Params);
+$xfer_result->Caption="Valider une organisation";
 //@CODE_ACTION@
-if($Project>0)
-	$find=$self->get($Project);
+if($Organisation>0)
+	$find=$self->get($Organisation);
 $self->setFrom($Params);
 if ($find)
 	$self->update();
 else
 	$self->insert();
-$xfer_result->m_context = array("Project" => $self->id);
+$xfer_result->m_context = array("Organisation" => $self->id);
 $xfer_result->redirectAction($self->NewAction("editer","","Fiche"));
 //@CODE_ACTION@
 	$connect->commit();

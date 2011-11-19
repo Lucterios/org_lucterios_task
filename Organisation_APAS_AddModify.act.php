@@ -17,55 +17,56 @@
 // 	Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 // 
 // 		Contributeurs: Fanny ALLEAUME, Pierre-Olivier VERSCHOORE, Laurent GAY// Action file write by SDK tool
-// --- Last modification: Date 10 November 2011 2:37:39 By  ---
+// --- Last modification: Date 10 November 2011 3:51:42 By  ---
 
 require_once('CORE/xfer_exception.inc.php');
 require_once('CORE/rights.inc.php');
 
 //@TABLES@
-require_once('extensions/org_lucterios_task/Project.tbl.php');
+require_once('extensions/org_lucterios_task/Organisation.tbl.php');
 //@TABLES@
-//@XFER:acknowledge
-require_once('CORE/xfer.inc.php');
-//@XFER:acknowledge@
+//@XFER:custom
+require_once('CORE/xfer_custom.inc.php');
+//@XFER:custom@
 
 
-//@DESC@Supprimer un project
-//@INDEX:Project
+//@DESC@Ajouter/Modifier une organisation
+//@PARAM@ 
+//@INDEX:Organisation
 
-//@TRANSACTION:
 
 //@LOCK:2
 
-function Project_APAS_Del($Params)
+function Organisation_APAS_AddModify($Params)
 {
-$self=new DBObj_org_lucterios_task_Project();
-$Project=getParams($Params,"Project",-1);
-if ($Project>=0) $self->get($Project);
+$self=new DBObj_org_lucterios_task_Organisation();
+$Organisation=getParams($Params,"Organisation",-1);
+if ($Organisation>=0) $self->get($Organisation);
 
-$self->lockRecord("Project_APAS_Del");
-
-global $connect;
-$connect->begin();
+$self->lockRecord("Organisation_APAS_AddModify");
 try {
-$xfer_result=&new Xfer_Container_Acknowledge("org_lucterios_task","Project_APAS_Del",$Params);
-$xfer_result->Caption="Supprimer un project";
-$xfer_result->m_context['ORIGINE']="Project_APAS_Del";
+$xfer_result=&new Xfer_Container_Custom("org_lucterios_task","Organisation_APAS_AddModify",$Params);
+$xfer_result->Caption="Ajouter/Modifier un organisation";
+$xfer_result->m_context['ORIGINE']="Organisation_APAS_AddModify";
 $xfer_result->m_context['TABLE_NAME']=$self->__table;
 $xfer_result->m_context['RECORD_ID']=$self->id;
 //@CODE_ACTION@
-if (($res=$self->canBeDelete())!=0) {
-	require_once("CORE/Lucterios_Error.inc.php");
-	throw new LucteriosException(IMPORTANT,"Suppression de ".$self->toText()." impossible");
-}
-if ($xfer_result->confirme("Voulez vous supprimer ".$self->toText()."?"))
-	$self->deleteCascade();
+if ($self->id>0)
+	$xfer_result->Caption="Modifier une organisation";
+else
+	$xfer_result->Caption="Ajouter une organisation";
+$img=new Xfer_Comp_Image("img");
+$img->setLocation(0,0,1,5);
+$img->setValue("organisation.png");
+$xfer_result->addComponent($img);
+$self->setFrom($Params);
+$xfer_result=$self->edit(1,0,$xfer_result);
+$xfer_result->addAction($self->newAction("_Ok", "ok.png", "AddModifyAct",FORMTYPE_MODAL,CLOSE_YES));
+$xfer_result->addAction(new Xfer_Action("_Annuler", "cancel.png"));
 //@CODE_ACTION@
 	$xfer_result->setCloseAction(new Xfer_Action('unlock','','CORE','UNLOCK',FORMTYPE_MODAL,CLOSE_YES,SELECT_NONE));
-	$connect->commit();
 }catch(Exception $e) {
-	$connect->rollback();
-	$self->unlockRecord("Project_APAS_Del");
+	$self->unlockRecord("Organisation_APAS_AddModify");
 	throw $e;
 }
 return $xfer_result;

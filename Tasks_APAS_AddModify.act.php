@@ -1,13 +1,13 @@
 <?php
-// 	This file is part of Lucterios/Diacamma, a software developped by "Le Sanglier du Libre" (http://www.sd-libre.fr)
+// 	This file is part of Diacamma, a software developped by "Le Sanglier du Libre" (http://www.sd-libre.fr)
 // 	Thanks to have payed a retribution for using this module.
 // 
-// 	Lucterios/Diacamma is free software; you can redistribute it and/or modify
+// 	Diacamma is free software; you can redistribute it and/or modify
 // 	it under the terms of the GNU General Public License as published by
 // 	the Free Software Foundation; either version 2 of the License, or
 // 	(at your option) any later version.
 // 
-// 	Lucterios/Diacamma is distributed in the hope that it will be useful,
+// 	Diacamma is distributed in the hope that it will be useful,
 // 	but WITHOUT ANY WARRANTY; without even the implied warranty of
 // 	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // 	GNU General Public License for more details.
@@ -16,8 +16,9 @@
 // 	along with Lucterios; if not, write to the Free Software
 // 	Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 // 
-// 		Contributeurs: Fanny ALLEAUME, Pierre-Olivier VERSCHOORE, Laurent GAY// Action file write by SDK tool
-// --- Last modification: Date 10 November 2011 6:04:25 By  ---
+// 		Contributeurs: Fanny ALLEAUME, Pierre-Olivier VERSCHOORE, Laurent GAY
+// Action file write by SDK tool
+// --- Last modification: Date 18 November 2011 19:06:37 By  ---
 
 require_once('CORE/xfer_exception.inc.php');
 require_once('CORE/rights.inc.php');
@@ -31,7 +32,7 @@ require_once('CORE/xfer_custom.inc.php');
 
 
 //@DESC@Ajouter/Modifier une tache
-//@PARAM@ Project=0
+//@PARAM@ Organisation=0
 //@INDEX:task
 
 
@@ -39,7 +40,7 @@ require_once('CORE/xfer_custom.inc.php');
 
 function Tasks_APAS_AddModify($Params)
 {
-$Project=getParams($Params,"Project",0);
+$Organisation=getParams($Params,"Organisation",0);
 $self=new DBObj_org_lucterios_task_Tasks();
 $task=getParams($Params,"task",-1);
 if ($task>=0) $self->get($task);
@@ -61,8 +62,8 @@ $img->setLocation(0,0,1,5);
 $img->setValue("task.png");
 $xfer_result->addComponent($img);
 $self->setFrom($Params);
-if ($Project>0)
-	$self->projet=$Project;
+if ($Organisation>0)
+	$self->organisation=$Organisation;
 $xfer_result=$self->edit(1,0,$xfer_result);
 $xfer_result->addAction($self->newAction("_Ok", "ok.png", "AddModifyAct",FORMTYPE_MODAL,CLOSE_YES));
 $xfer_result->addAction(new Xfer_Action("_Annuler", "cancel.png"));

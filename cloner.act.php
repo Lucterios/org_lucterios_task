@@ -17,56 +17,58 @@
 // 	Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 // 
 // 		Contributeurs: Fanny ALLEAUME, Pierre-Olivier VERSCHOORE, Laurent GAY// Action file write by SDK tool
-// --- Last modification: Date 10 November 2011 3:51:42 By  ---
+// --- Last modification: Date 18 November 2011 5:42:55 By  ---
 
 require_once('CORE/xfer_exception.inc.php');
 require_once('CORE/rights.inc.php');
 
 //@TABLES@
-require_once('extensions/org_lucterios_task/Project.tbl.php');
+require_once('extensions/org_lucterios_task/Organisation.tbl.php');
+require_once('extensions/org_lucterios_task/Tasks.tbl.php');
 //@TABLES@
 //@XFER:custom
 require_once('CORE/xfer_custom.inc.php');
 //@XFER:custom@
 
 
-//@DESC@Ajouter/Modifier un project
-//@PARAM@ 
-//@INDEX:Project
+//@DESC@Cloner
+//@PARAM@ task=0
+//@PARAM@ Organisation=0
 
 
-//@LOCK:2
+//@LOCK:0
 
-function Project_APAS_AddModify($Params)
+function cloner($Params)
 {
-$self=new DBObj_org_lucterios_task_Project();
-$Project=getParams($Params,"Project",-1);
-if ($Project>=0) $self->get($Project);
-
-$self->lockRecord("Project_APAS_AddModify");
+$task=getParams($Params,"task",0);
+$Organisation=getParams($Params,"Organisation",0);
 try {
-$xfer_result=&new Xfer_Container_Custom("org_lucterios_task","Project_APAS_AddModify",$Params);
-$xfer_result->Caption="Ajouter/Modifier un project";
-$xfer_result->m_context['ORIGINE']="Project_APAS_AddModify";
-$xfer_result->m_context['TABLE_NAME']=$self->__table;
-$xfer_result->m_context['RECORD_ID']=$self->id;
+$xfer_result=&new Xfer_Container_Custom("org_lucterios_task","cloner",$Params);
+$xfer_result->Caption="Cloner";
 //@CODE_ACTION@
-if ($self->id>0)
-	$xfer_result->Caption="Modifier un project";
-else
-	$xfer_result->Caption="Ajouter un project";
 $img=new Xfer_Comp_Image("img");
 $img->setLocation(0,0,1,5);
-$img->setValue("project.png");
+if ($task>0)
+	$img->setValue("task.png");
+else
+	$img->setValue("organisation.png");
 $xfer_result->addComponent($img);
-$self->setFrom($Params);
-$xfer_result=$self->edit(1,0,$xfer_result);
-$xfer_result->addAction($self->newAction("_Ok", "ok.png", "AddModifyAct",FORMTYPE_MODAL,CLOSE_YES));
+
+$select=array(''=>'Aucun','+1 week'=>'1 semaine','+2 week'=>'2 semaine','+3 week'=>'3 semaine','+1 month'=>'1 mois','+3 month'=>'3 mois','+6 month'=>'6 mois','+1 year'=>'1 an');
+$lbl=new Xfer_Comp_LabelForm('typelbl');
+$lbl->setValue("{[bold]}Décalage temporel{[/bold]}");
+$lbl->setLocation(1,1);
+$xfer_result->addComponent($lbl);
+$edt=new Xfer_Comp_Select('timeOffset');
+$edt->setValue(0);
+$edt->setSelect($select);
+$edt->setLocation(1,2);
+$xfer_result->addComponent($edt);
+
+$xfer_result->addAction(new Xfer_Action("_OK", "ok.png",'org_lucterios_task',"cloneAct"));
 $xfer_result->addAction(new Xfer_Action("_Annuler", "cancel.png"));
 //@CODE_ACTION@
-	$xfer_result->setCloseAction(new Xfer_Action('unlock','','CORE','UNLOCK',FORMTYPE_MODAL,CLOSE_YES,SELECT_NONE));
 }catch(Exception $e) {
-	$self->unlockRecord("Project_APAS_AddModify");
 	throw $e;
 }
 return $xfer_result;

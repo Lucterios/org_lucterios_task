@@ -17,7 +17,7 @@
 // 	Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 // 
 // 		Contributeurs: Fanny ALLEAUME, Pierre-Olivier VERSCHOORE, Laurent GAY// Method file write by SDK tool
-// --- Last modification: Date 10 November 2011 5:42:21 By  ---
+// --- Last modification: Date 18 November 2011 2:27:32 By  ---
 
 require_once('CORE/xfer_exception.inc.php');
 require_once('CORE/rights.inc.php');
@@ -33,16 +33,16 @@ require_once('extensions/org_lucterios_task/Tasks.tbl.php');
 function Tasks_APAS_getList(&$self,$Params)
 {
 //@CODE_ACTION@
-$QUERY="SELECT *,org_lucterios_task_FCT_Tasks_APAS_getValue(id) AS value FROM org_lucterios_task_Tasks WHERE ((type='n')";
+$QUERY="SELECT *,org_lucterios_task_FCT_Tasks_APAS_getTextColor(id) as titleColor FROM org_lucterios_task_Tasks WHERE ((type='n')";
 $contact=new DBObj_org_lucterios_contacts_personnePhysique;
 if ($contact->findConnected()) {
 	$QUERY.=" OR (owner=".$contact->id.")";
 }
 $QUERY.=")";
 if ($Params['isTerminate']!='o') {
-	$QUERY.=" AND timeLast<>0";
+	$QUERY.=" AND state<>2";
 }
-$QUERY.=" ORDER BY projet,end";
+$QUERY.=" ORDER BY organisation,end";
 $self->query($QUERY);
 //@CODE_ACTION@
 }

@@ -16,30 +16,49 @@
 // 	along with Lucterios; if not, write to the Free Software
 // 	Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 // 
-// 		Contributeurs: Fanny ALLEAUME, Pierre-Olivier VERSCHOORE, Laurent GAY// Method file write by SDK tool
-// --- Last modification: Date 10 November 2011 4:43:59 By  ---
+// 		Contributeurs: Fanny ALLEAUME, Pierre-Olivier VERSCHOORE, Laurent GAY// Action file write by SDK tool
+// --- Last modification: Date 18 November 2011 5:10:56 By  ---
 
 require_once('CORE/xfer_exception.inc.php');
 require_once('CORE/rights.inc.php');
 
 //@TABLES@
-require_once('extensions/org_lucterios_task/Project.tbl.php');
+require_once('extensions/org_lucterios_task/Tasks.tbl.php');
 //@TABLES@
+//@XFER:acknowledge
+require_once('CORE/xfer.inc.php');
+//@XFER:acknowledge@
 
-//@DESC@getList de projects
-//@PARAM@ Params
 
-function Project_APAS_getGrid(&$self,$Params)
+//@DESC@Commencer une tache
+//@PARAM@ 
+//@INDEX:task
+
+//@TRANSACTION:
+
+//@LOCK:0
+
+function Tasks_APAS_Commencer($Params)
 {
+$self=new DBObj_org_lucterios_task_Tasks();
+$task=getParams($Params,"task",-1);
+if ($task>=0) $self->get($task);
+
+global $connect;
+$connect->begin();
+try {
+$xfer_result=&new Xfer_Container_Acknowledge("org_lucterios_task","Tasks_APAS_Commencer",$Params);
+$xfer_result->Caption="Commencer une tache";
 //@CODE_ACTION@
-$grid = new Xfer_Comp_Grid("Project");
-$grid->setDBObject($self, array("nom","description","progression","end"),"",$Params);
-$grid->addAction($self->newAction("_Editer", "edit.png", "Fiche", FORMTYPE_MODAL,CLOSE_NO, SELECT_SINGLE));
-$grid->addAction($self->newAction("_Supprimer", "suppr.png", "Del", FORMTYPE_MODAL,CLOSE_NO, SELECT_SINGLE));
-$grid->addAction($self->newAction("_Ajouter", "add.png", "AddModify",FORMTYPE_MODAL,CLOSE_NO, SELECT_NONE));
-$grid->setSize(200,750);
-return $grid;
+$self->state=1;
+$self->Update();
 //@CODE_ACTION@
+	$connect->commit();
+}catch(Exception $e) {
+	$connect->rollback();
+	throw $e;
+}
+return $xfer_result;
 }
 
 ?>

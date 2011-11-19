@@ -17,52 +17,59 @@
 // 	Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 // 
 // 		Contributeurs: Fanny ALLEAUME, Pierre-Olivier VERSCHOORE, Laurent GAY// Action file write by SDK tool
-// --- Last modification: Date 10 November 2011 3:51:49 By  ---
+// --- Last modification: Date 18 November 2011 5:57:35 By  ---
 
 require_once('CORE/xfer_exception.inc.php');
 require_once('CORE/rights.inc.php');
 
 //@TABLES@
-require_once('extensions/org_lucterios_task/Project.tbl.php');
+require_once('extensions/org_lucterios_task/Organisation.tbl.php');
+require_once('extensions/org_lucterios_task/Tasks.tbl.php');
 //@TABLES@
-//@XFER:custom
-require_once('CORE/xfer_custom.inc.php');
-//@XFER:custom@
+//@XFER:acknowledge
+require_once('CORE/xfer.inc.php');
+//@XFER:acknowledge@
 
 
-//@DESC@Lister des projects
-//@PARAM@ 
+//@DESC@Cloner
+//@PARAM@ timeOffset
+//@PARAM@ task=0
+//@PARAM@ Organisation=0
 
+//@TRANSACTION:
 
 //@LOCK:0
 
-function Project_APAS_List($Params)
+function cloneAct($Params)
 {
-$self=new DBObj_org_lucterios_task_Project();
+if (($ret=checkParams("org_lucterios_task", "cloneAct",$Params ,"timeOffset"))!=null)
+	return $ret;
+$timeOffset=getParams($Params,"timeOffset",0);
+$task=getParams($Params,"task",0);
+$Organisation=getParams($Params,"Organisation",0);
+
+global $connect;
+$connect->begin();
 try {
-$xfer_result=&new Xfer_Container_Custom("org_lucterios_task","Project_APAS_List",$Params);
-$xfer_result->Caption="Lister des projects";
+$xfer_result=&new Xfer_Container_Acknowledge("org_lucterios_task","cloneAct",$Params);
+$xfer_result->Caption="Cloner";
 //@CODE_ACTION@
-$img=new  Xfer_Comp_Image("img");
-$img->setLocation(0,0);
-$img->setValue("project.png");
-$xfer_result->addComponent($img);
-$lbl=new  Xfer_Comp_LabelForm("titre");
-$lbl->setLocation(1,0);
-$xfer_result->addComponent($lbl);
-$lbl->setValue("{[center]}{[bold]}Lister des projects{[/bold]}{[/center]}");
-$self->find();
-$grid = $self->getGrid($Params);
-$grid->setLocation(0,1,2);
-$xfer_result->addComponent($grid);
-$lbl=new Xfer_Comp_LabelForm("nb");
-$lbl->setLocation(0, 2,2);
-$lbl->setValue("Nombre total : ".$grid->mNbLines);
-$xfer_result->addComponent($lbl);
-$xfer_result->addAction($self->newAction("_Imprimer", "print.png","PrintList",FORMTYPE_MODAL,CLOSE_NO));
-$xfer_result->addAction(new Xfer_Action("_Fermer", "close.png"));
+if ($task>0) {
+	$DBObj=new DBObj_org_lucterios_task_Tasks;
+	$DBObj->get($task);
+}
+else {
+	$DBObj=new DBObj_org_lucterios_task_Organisation;
+	$DBObj->get($Organisation);
+}
+$id=$DBObj->clone($timeOffset);
+$xfer_result->m_context['task']=$id;
+$xfer_result->m_context['Organisation']=$id;
+$xfer_result->redirectAction($DBObj->NewAction('','','Fiche',FORMTYPE_MODAL,CLOSE_NO));
 //@CODE_ACTION@
+	$connect->commit();
 }catch(Exception $e) {
+	$connect->rollback();
 	throw $e;
 }
 return $xfer_result;

@@ -17,33 +17,26 @@
 // 	Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 // 
 // 		Contributeurs: Fanny ALLEAUME, Pierre-Olivier VERSCHOORE, Laurent GAY// Method file write by SDK tool
-// --- Last modification: Date 18 November 2011 2:22:46 By  ---
+// --- Last modification: Date 10 November 2011 2:37:39 By  ---
 
 require_once('CORE/xfer_exception.inc.php');
 require_once('CORE/rights.inc.php');
 
 //@TABLES@
-require_once('extensions/org_lucterios_task/Tasks.tbl.php');
+require_once('extensions/org_lucterios_task/Organisation.tbl.php');
 //@TABLES@
 
-//@DESC@getList de tache
-//@PARAM@ Params
-//@PARAM@ withProject=0
+//@DESC@Editer une organisation
+//@PARAM@ posX
+//@PARAM@ posY
+//@PARAM@ xfer_result
 
-function Tasks_APAS_getGrid(&$self,$Params,$withProject=0)
+function Organisation_APAS_edit(&$self,$posX,$posY,$xfer_result)
 {
 //@CODE_ACTION@
-$grid = new Xfer_Comp_Grid("task");
-$field=array('titleColor','description','end','owner','state');
-if ($withProject>0)
-	$field[]='organisation';
-$grid->setDBObject($self, $field,"",$Params);
-$grid->addAction($self->newAction("_Editer", "edit.png", "Fiche", FORMTYPE_MODAL,CLOSE_NO, SELECT_SINGLE));
-$grid->addAction($self->newAction("_Supprimer", "suppr.png", "Del", FORMTYPE_MODAL,CLOSE_NO, SELECT_SINGLE));
-$grid->addAction($self->newAction("_Ajouter", "add.png", "AddModify",FORMTYPE_MODAL,CLOSE_NO, SELECT_NONE));
-$grid->addAction(new Xfer_Action("_Cloner", "add.png",'org_lucterios_task',"cloner", FORMTYPE_MODAL,CLOSE_NO, SELECT_SINGLE));
-$grid->setSize(200,750);
-return $grid;
+$xfer_result->setDBObject($self,"nom",false,$posY++,$posX);
+$xfer_result->setDBObject($self,"description",false,$posY++,$posX);
+return $xfer_result;
 //@CODE_ACTION@
 }
 

@@ -17,33 +17,32 @@
 // 	Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 // 
 // 		Contributeurs: Fanny ALLEAUME, Pierre-Olivier VERSCHOORE, Laurent GAY// Method file write by SDK tool
-// --- Last modification: Date 10 November 2011 4:36:26 By  ---
+// --- Last modification: Date 18 November 2011 1:07:05 By  ---
 
 require_once('CORE/xfer_exception.inc.php');
 require_once('CORE/rights.inc.php');
 
 //@TABLES@
-require_once('extensions/org_lucterios_task/Project.tbl.php');
+require_once('extensions/org_lucterios_task/Organisation.tbl.php');
 //@TABLES@
 
-//@DESC@
-//@PARAM@ 
+//@DESC@Voir une organisation
+//@PARAM@ posX
+//@PARAM@ posY
+//@PARAM@ xfer_result
 
-function Project_APAS_getValue(&$self)
+function Organisation_APAS_show(&$self,$posX,$posY,$xfer_result)
 {
 //@CODE_ACTION@
-$last=(float)$self->timeLast;
-$total=(float)$self->timeTotal;
-$val=ceil(10000*($total-$last)/$total)/100;
-$val_based=ceil(25.0*$val/100.0);
-$text=str_pad($val."% ",5,"#",STR_PAD_LEFT);
-$text=str_replace('#','&#160;',$text);
-$text.="{[bold]}{[font color='green']}".str_repeat('|',$val_based)."{[/font]}";
-$text.="{[font color='white']}".str_repeat('|',25-$val_based)."{[/font]}{[/bold]} ";
-$text_last=str_pad($self->timeLast."h",3,"#",STR_PAD_LEFT);
-$text_last=str_replace('#','&#160;',$text_last);
-$text.=$text_last;
-return $text;
+$xfer_result->setDBObject($self,"nom",true,$posY++,$posX);
+$xfer_result->setDBObject($self,"description",true,$posY++,$posX);
+$xfer_result->setDBObject($self,"progression",true,$posY++,$posX);
+$xfer_result->setDBObject($self,"end",true,$posY++,$posX);
+$DBTask=$self->getField("tasks",'','end');
+$grid=$DBTask->getGrid($Params);
+$grid->setLocation($posX,$posY++,2);
+$xfer_result->addComponent($grid);
+return $xfer_result;
 //@CODE_ACTION@
 }
 

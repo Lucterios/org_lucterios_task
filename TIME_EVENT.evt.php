@@ -17,7 +17,7 @@
 // 	Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 // 
 // 		Contributeurs: Fanny ALLEAUME, Pierre-Olivier VERSCHOORE, Laurent GAY// Event file write by SDK tool
-// --- Last modification: Date 10 November 2011 6:44:07 By  ---
+// --- Last modification: Date 18 November 2011 5:01:40 By  ---
 
 require_once('CORE/xfer_exception.inc.php');
 require_once('CORE/rights.inc.php');
@@ -33,7 +33,7 @@ require_once('extensions/org_lucterios_contacts/personneMorale.tbl.php');
 function org_lucterios_task_APAS_TIME_EVENT(&$logContent)
 {
 //@CODE_ACTION@
-$Q="SELECT * FROM org_lucterios_task_Tasks WHERE rappel>0 AND timeLast>0 AND ((TO_DAYS(end)-TO_DAYS(now()))<=rappel)";
+$Q="SELECT * FROM org_lucterios_task_Tasks WHERE rappel>0 AND state<>2";
 $DBTask=new DBObj_org_lucterios_task_Tasks;
 $DBTask->query($Q);
 while ($DBTask->fetch()) {

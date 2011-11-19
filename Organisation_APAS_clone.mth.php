@@ -17,34 +17,32 @@
 // 	Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 // 
 // 		Contributeurs: Fanny ALLEAUME, Pierre-Olivier VERSCHOORE, Laurent GAY// Method file write by SDK tool
-// --- Last modification: Date 10 November 2011 5:41:59 By  ---
+// --- Last modification: Date 18 November 2011 5:55:43 By  ---
 
 require_once('CORE/xfer_exception.inc.php');
 require_once('CORE/rights.inc.php');
 
 //@TABLES@
-require_once('extensions/org_lucterios_task/Project.tbl.php');
+require_once('extensions/org_lucterios_task/Tasks.tbl.php');
+require_once('extensions/org_lucterios_task/Organisation.tbl.php');
 //@TABLES@
 
-//@DESC@Voir un project
-//@PARAM@ posX
-//@PARAM@ posY
-//@PARAM@ xfer_result
+//@DESC@Cloner
+//@PARAM@ timeOffset
 
-function Project_APAS_show(&$self,$posX,$posY,$xfer_result)
+function Organisation_APAS_clone(&$self,$timeOffset)
 {
 //@CODE_ACTION@
-$xfer_result->setDBObject($self,"nom",true,$posY++,$posX);
-$xfer_result->setDBObject($self,"description",true,$posY++,$posX);
-$xfer_result->setDBObject($self,"timeLast",true,$posY++,$posX);
-$xfer_result->setDBObject($self,"timeTotal",true,$posY++,$posX);
-$xfer_result->setDBObject($self,"progression",true,$posY++,$posX);
-$xfer_result->setDBObject($self,"end",true,$posY++,$posX);
-$DBTask=$self->getField("tasks",'','end');
-$grid=$DBTask->getGrid($Params);
-$grid->setLocation($posX,$posY++,2);
-$xfer_result->addComponent($grid);
-return $xfer_result;
+$DBOrga=new DBObj_org_lucterios_task_Organisation;
+$DBOrga->nom=$self->nom;
+$DBOrga->description=$self->description;
+$DBOrga->insert();
+
+$DBOldTask=$self->getField('tasks');
+while($DBOldTask->fetch()) {
+	$DBOldTask->clone($timeOffset, $DBOrga->id);
+}
+return $DBOrga->id;
 //@CODE_ACTION@
 }
 

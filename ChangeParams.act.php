@@ -17,52 +17,51 @@
 // 	Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 // 
 // 		Contributeurs: Fanny ALLEAUME, Pierre-Olivier VERSCHOORE, Laurent GAY// Action file write by SDK tool
-// --- Last modification: Date 10 November 2011 3:52:02 By  ---
+// --- Last modification: Date 18 November 2011 4:30:45 By  ---
 
 require_once('CORE/xfer_exception.inc.php');
 require_once('CORE/rights.inc.php');
 
 //@TABLES@
-require_once('extensions/org_lucterios_task/Project.tbl.php');
+require_once('CORE/extension_params.tbl.php');
 //@TABLES@
 //@XFER:custom
 require_once('CORE/xfer_custom.inc.php');
 //@XFER:custom@
 
 
-//@DESC@Fiche d'un project
+//@DESC@Changer les paramètres
 //@PARAM@ 
-//@INDEX:Project
 
 
-//@LOCK:2
+//@LOCK:0
 
-function Project_APAS_Fiche($Params)
+function ChangeParams($Params)
 {
-$self=new DBObj_org_lucterios_task_Project();
-$Project=getParams($Params,"Project",-1);
-if ($Project>=0) $self->get($Project);
-
-$self->lockRecord("Project_APAS_Fiche");
 try {
-$xfer_result=&new Xfer_Container_Custom("org_lucterios_task","Project_APAS_Fiche",$Params);
-$xfer_result->Caption="Fiche d'un project";
-$xfer_result->m_context['ORIGINE']="Project_APAS_Fiche";
-$xfer_result->m_context['TABLE_NAME']=$self->__table;
-$xfer_result->m_context['RECORD_ID']=$self->id;
+$xfer_result=&new Xfer_Container_Custom("org_lucterios_task","ChangeParams",$Params);
+$xfer_result->Caption="Changer les paramètres";
 //@CODE_ACTION@
-$img=new Xfer_Comp_Image("img");
-$img->setLocation(0,0,1,5);
-$img->setValue("project.png");
+$img=new  Xfer_Comp_Image('img');
+$img->setValue('task.png');
+$img->setLocation(0,0);
 $xfer_result->addComponent($img);
-$xfer_result=$self->show(1,0,$xfer_result);
-$xfer_result->addAction($self->newAction("_Modifier", "edit.png", "AddModify", FORMTYPE_MODAL,CLOSE_YES));
-$xfer_result->addAction($self->newAction("_Imprimer", "print.png", "PrintFile", FORMTYPE_MODAL,CLOSE_NO));
-$xfer_result->addAction(new Xfer_Action("_Fermer", "close.png"));
+$lab = new Xfer_Comp_LabelForm("title");
+$lab->setValue("{[newline]}{[center]}{[bold]}Changer les paramètres{[/bold]}{[/center]}");
+$lab->setLocation(1,0,2);
+$xfer_result->addComponent($lab);
+
+$DBParam=new DBObj_CORE_extension_params();
+$ParamsDesc=array('messageRappel'=>array(1,5));
+$xfer_result=$DBParam->fillCustom("org_lucterios_task",0,$ParamsDesc,$xfer_result);
+$comp=$xfer_result->getComponents('messageRappel');
+$comp->setSize(120,450);
+
+$xfer_result->m_context['extensionName']="org_lucterios_task";
+$xfer_result->addAction($DBParam->NewAction('_Valider','ok.png','validerModif',FORMTYPE_MODAL,CLOSE_YES));
+$xfer_result->addAction(new Xfer_Action("_Annuler","cancel.png"));
 //@CODE_ACTION@
-	$xfer_result->setCloseAction(new Xfer_Action('unlock','','CORE','UNLOCK',FORMTYPE_MODAL,CLOSE_YES,SELECT_NONE));
 }catch(Exception $e) {
-	$self->unlockRecord("Project_APAS_Fiche");
 	throw $e;
 }
 return $xfer_result;

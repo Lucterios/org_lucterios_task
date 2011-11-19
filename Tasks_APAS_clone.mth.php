@@ -16,50 +16,37 @@
 // 	along with Lucterios; if not, write to the Free Software
 // 	Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 // 
-// 		Contributeurs: Fanny ALLEAUME, Pierre-Olivier VERSCHOORE, Laurent GAY// Action file write by SDK tool
-// --- Last modification: Date 10 November 2011 2:37:39 By  ---
+// 		Contributeurs: Fanny ALLEAUME, Pierre-Olivier VERSCHOORE, Laurent GAY// Method file write by SDK tool
+// --- Last modification: Date 18 November 2011 5:55:25 By  ---
 
 require_once('CORE/xfer_exception.inc.php');
 require_once('CORE/rights.inc.php');
 
 //@TABLES@
-require_once('extensions/org_lucterios_task/Project.tbl.php');
+require_once('extensions/org_lucterios_task/Tasks.tbl.php');
 //@TABLES@
-//@XFER:print
-require_once('CORE/xfer_printing.inc.php');
-//@XFER:print@
 
+//@DESC@Cloner
+//@PARAM@ timeOffset
+//@PARAM@ newOrganisation=0
 
-//@DESC@Imprimer une liste de projects
-
-
-//@LOCK:0
-
-function Project_APAS_PrintList($Params)
+function Tasks_APAS_clone(&$self,$timeOffset,$newOrganisation=0)
 {
-$self=new DBObj_org_lucterios_task_Project();
-try {
-$xfer_result=&new Xfer_Container_Print("org_lucterios_task","Project_APAS_PrintList",$Params);
-$xfer_result->Caption="Imprimer une liste de projects";
 //@CODE_ACTION@
-require_once "CORE/PrintListing.inc.php";
-$listing=new PrintListing("Liste des projects");
-$listing->Header="Liste des projects";
-$listing->GridHeader[]=array("nom",95);
-$listing->GridHeader[]=array("description",95);
-	$self->find();
-while ($self->fetch()) {
-	$one_row=array();
-	$one_row[]=$self->nom;
-	$one_row[]=$self->description;
-	$listing->GridContent[]=$one_row;
-}
-$xfer_result->printListing($listing);
+$DBTask=new DBObj_org_lucterios_task_Tasks;
+$DBTask->title=$self->title;
+$DBTask->description=$self->description;
+$DBTask->begin=date("Y-m-d",strtotime(date("Y-m-d", strtotime($self->begin)).$timeOffset));
+$DBTask->end=date("Y-m-d",strtotime(date("Y-m-d", strtotime($self->end)).$timeOffset));
+$DBTask->state=0;
+$DBTask->owner=$self->owner;
+$DBTask->type=$self->type;
+$DBTask->rappel=$self->rappel;
+$DBTask->couleur=$self->couleur;
+$DBTask->organisation=$newOrganisation;
+$DBTask->insert();
+return $DBTask->id;
 //@CODE_ACTION@
-}catch(Exception $e) {
-	throw $e;
-}
-return $xfer_result;
 }
 
 ?>

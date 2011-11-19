@@ -16,28 +16,49 @@
 // 	along with Lucterios; if not, write to the Free Software
 // 	Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 // 
-// 		Contributeurs: Fanny ALLEAUME, Pierre-Olivier VERSCHOORE, Laurent GAY// Method file write by SDK tool
-// --- Last modification: Date 10 November 2011 2:37:39 By  ---
+// 		Contributeurs: Fanny ALLEAUME, Pierre-Olivier VERSCHOORE, Laurent GAY// Action file write by SDK tool
+// --- Last modification: Date 18 November 2011 5:11:07 By  ---
 
 require_once('CORE/xfer_exception.inc.php');
 require_once('CORE/rights.inc.php');
 
 //@TABLES@
-require_once('extensions/org_lucterios_task/Project.tbl.php');
+require_once('extensions/org_lucterios_task/Tasks.tbl.php');
 //@TABLES@
+//@XFER:acknowledge
+require_once('CORE/xfer.inc.php');
+//@XFER:acknowledge@
 
-//@DESC@Editer un project
-//@PARAM@ posX
-//@PARAM@ posY
-//@PARAM@ xfer_result
 
-function Project_APAS_edit(&$self,$posX,$posY,$xfer_result)
+//@DESC@Finir une tache
+//@PARAM@ 
+//@INDEX:task
+
+//@TRANSACTION:
+
+//@LOCK:0
+
+function Tasks_APAS_Finir($Params)
 {
+$self=new DBObj_org_lucterios_task_Tasks();
+$task=getParams($Params,"task",-1);
+if ($task>=0) $self->get($task);
+
+global $connect;
+$connect->begin();
+try {
+$xfer_result=&new Xfer_Container_Acknowledge("org_lucterios_task","Tasks_APAS_Finir",$Params);
+$xfer_result->Caption="Finir une tache";
 //@CODE_ACTION@
-$xfer_result->setDBObject($self,"nom",false,$posY++,$posX);
-$xfer_result->setDBObject($self,"description",false,$posY++,$posX);
+$self->state=2;
+$self->Update();
+//@CODE_ACTION@
+	$connect->commit();
+}catch(Exception $e) {
+	$connect->rollback();
+	throw $e;
+}
 return $xfer_result;
-//@CODE_ACTION@
 }
 
 ?>

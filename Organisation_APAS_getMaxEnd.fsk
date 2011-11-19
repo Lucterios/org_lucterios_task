@@ -16,21 +16,22 @@
 -- 	Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 -- 
 -- 		Contributeurs: Fanny ALLEAUME, Pierre-Olivier VERSCHOORE, Laurent GAY-- Stocked file write by SDK tool
--- Last modification: Date 10 November 2011 4:01:57 By  ---
+-- Last modification: Date 10 November 2011 4:09:04 By  ---
 
 
 -- @DESC@
 -- @PARAM@ ObjId int(10)
 
-CREATE FUNCTION org_lucterios_task_FCT_Project_APAS_getTimeLast(ObjId int(10))
+CREATE FUNCTION org_lucterios_task_FCT_Organisation_APAS_getMaxEnd(ObjId int(10))
 RETURNS TEXT
 READS SQL DATA
 BEGIN
 DECLARE result TEXT DEFAULT '';
 -- @CODE_ACTION@
-SELECT sum(timeLast) INTO result FROM org_lucterios_task_Tasks WHERE projet=ObjId;
-IF result is NULL THEN
-	set result='0';
+DECLARE text TEXT DEFAULT '';
+SELECT max(end) INTO text FROM org_lucterios_task_Tasks WHERE organisation=ObjId;
+IF (CHAR_LENGTH(text)=10) THEN
+	set result=CONCAT(MID(text,9,2),'/',MID(text,6,2),'/',MID(text,1,4));
 END IF;
 -- @CODE_ACTION@
 RETURN result;
