@@ -1,13 +1,13 @@
 <?php
-// 	This file is part of Lucterios/Diacamma, a software developped by "Le Sanglier du Libre" (http://www.sd-libre.fr)
+// 	This file is part of Diacamma, a software developped by "Le Sanglier du Libre" (http://www.sd-libre.fr)
 // 	Thanks to have payed a retribution for using this module.
 // 
-// 	Lucterios/Diacamma is free software; you can redistribute it and/or modify
+// 	Diacamma is free software; you can redistribute it and/or modify
 // 	it under the terms of the GNU General Public License as published by
 // 	the Free Software Foundation; either version 2 of the License, or
 // 	(at your option) any later version.
 // 
-// 	Lucterios/Diacamma is distributed in the hope that it will be useful,
+// 	Diacamma is distributed in the hope that it will be useful,
 // 	but WITHOUT ANY WARRANTY; without even the implied warranty of
 // 	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // 	GNU General Public License for more details.
@@ -16,8 +16,9 @@
 // 	along with Lucterios; if not, write to the Free Software
 // 	Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 // 
-// 		Contributeurs: Fanny ALLEAUME, Pierre-Olivier VERSCHOORE, Laurent GAY// Method file write by SDK tool
-// --- Last modification: Date 18 November 2011 2:14:50 By  ---
+// 		Contributeurs: Fanny ALLEAUME, Pierre-Olivier VERSCHOORE, Laurent GAY
+// Method file write by SDK tool
+// --- Last modification: Date 20 November 2011 12:20:09 By  ---
 
 require_once('CORE/xfer_exception.inc.php');
 require_once('CORE/rights.inc.php');
@@ -38,7 +39,7 @@ function Tasks_APAS_edit(&$self,$posX,$posY,$xfer_result)
 {
 //@CODE_ACTION@
 $xfer_result->setDBObject($self,"title",false,$posY,$posX,2);
-$xfer_result->setDBObject($self,"state",true,$posY++,$posX+3);
+$xfer_result->setDBObject($self,"state",false,$posY++,$posX+3);
 $xfer_result->setDBObject($self,"description",false,$posY++,$posX,5);
 $xfer_result->setDBObject($self,"begin",false,$posY,$posX,2);
 $xfer_result->setDBObject($self,"owner",true,$posY++,$posX+3);

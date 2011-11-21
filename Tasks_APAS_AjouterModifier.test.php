@@ -18,7 +18,7 @@
 // 
 // 		Contributeurs: Fanny ALLEAUME, Pierre-Olivier VERSCHOORE, Laurent GAY
 // Test file write by SDK tool
-// --- Last modification: Date 11 November 2011 19:11:52 By  ---
+// --- Last modification: Date 20 November 2011 20:06:59 By  ---
 
 
 //@TABLES@
@@ -48,7 +48,7 @@ $test->assertClass("Xfer_Comp_LabelForm",$comp,"Classe de titre");
 $test->assertEquals("{[center]}{[bold]}Liste des taches{[/bold]}{[/center]}","".$comp->m_value,"Valeur de titre");
 //GRID - task
 $comp=$rep->getComponents('task');
-$test->assertEquals(3,count($comp->m_actions),"Nb grid actions de task");
+$test->assertEquals(4,count($comp->m_actions),"Nb grid actions de task");
 $test->assertEquals(6,count($comp->m_headers),"Nb grid headers de task");
 $test->assertEquals(0,count($comp->m_records),"Nb grid records de task");
 $act=$comp->m_actions[0];
@@ -63,13 +63,17 @@ $act=$comp->m_actions[2];
 $test->assertEquals("_Ajouter",$act->m_title,'Titre grid action #3');
 $test->assertEquals("org_lucterios_task",$act->m_extension,'Ext grid action #3');
 $test->assertEquals("Tasks_APAS_AddModify",$act->m_action,'Act grid action #3');
+$act=$comp->m_actions[3];
+$test->assertEquals("_Cloner",$act->m_title,'Titre grid action #4');
+$test->assertEquals("org_lucterios_task",$act->m_extension,'Ext grid action #4');
+$test->assertEquals("cloner",$act->m_action,'Act grid action #4');
 $headers=$comp->m_headers;
-$test->assertEquals("Titre",$headers["title"]->m_descript,'Header #1');
+$test->assertEquals("Titre",$headers["titleColor"]->m_descript,'Header #1');
 $test->assertEquals("Description",$headers["description"]->m_descript,'Header #2');
 $test->assertEquals("Fin",$headers["end"]->m_descript,'Header #3');
 $test->assertEquals("Responsable",$headers["owner"]->m_descript,'Header #4');
-$test->assertEquals("Progression",$headers["valueGraph"]->m_descript,'Header #5');
-$test->assertEquals("Projet associé",$headers["projet"]->m_descript,'Header #5');
+$test->assertEquals("Etat",$headers["state"]->m_descript,'Header #5');
+$test->assertEquals("Organisation associée",$headers["organisation"]->m_descript,'Header #5');
 //LABELFORM - isTerminatelbl
 $comp=$rep->getComponents('isTerminatelbl');
 $test->assertClass("Xfer_Comp_LabelForm",$comp,"Classe de isTerminatelbl");
@@ -82,7 +86,6 @@ $test->assertEquals(false,$comp->m_value,"Valeur de isTerminate");
 $comp=$rep->getComponents('nb');
 $test->assertClass("Xfer_Comp_LabelForm",$comp,"Classe de nb");
 $test->assertEquals("Nombre total : 0","".$comp->m_value,"Valeur de nb");
-
 
 $rep=$test->CallAction("org_lucterios_task","Tasks_APAS_AddModify",array("isTerminate"=>"n",),"Xfer_Container_Custom");
 $test->assertEquals(2,COUNT($rep->m_actions),'nb action');
@@ -103,14 +106,11 @@ $test->assertEquals("extensions/org_lucterios_task/images/task.png","".$comp->m_
 $comp=$rep->getComponents('title');
 $test->assertClass("Xfer_Comp_Edit",$comp,"Classe de title");
 $test->assertEquals("","".$comp->m_value,"Valeur de title");
-//FLOAT - timeLast
-$comp=$rep->getComponents('timeLast');
-$test->assertClass("Xfer_Comp_Float",$comp,"Classe de timeLast");
-$test->assertEquals("0","".$comp->m_value,"Valeur de timeLast");
-//FLOAT - timeTotal
-$comp=$rep->getComponents('timeTotal');
-$test->assertClass("Xfer_Comp_Float",$comp,"Classe de timeTotal");
-$test->assertEquals("0","".$comp->m_value,"Valeur de timeTotal");
+//SELECT - state
+$comp=$rep->getComponents('state');
+$test->assertClass("Xfer_Comp_Select",$comp,"Classe de state");
+$test->assertEquals("","".$comp->m_value,"Valeur de state");
+$test->assertEquals(3,COUNT($comp->m_select),'Nb select de state');
 //MEMO - description
 $comp=$rep->getComponents('description');
 $test->assertClass("Xfer_Comp_Memo",$comp,"Classe de description");
@@ -140,26 +140,33 @@ $comp=$rep->getComponents('type');
 $test->assertClass("Xfer_Comp_Check",$comp,"Classe de type");
 $test->assertEquals(true,$comp->m_value,"Valeur de type");
 $test->CallAction("CORE","UNLOCK",array("ORIGINE"=>"Tasks_APAS_AddModify","RECORD_ID"=>"","TABLE_NAME"=>"org_lucterios_task_Tasks","isTerminate"=>"n",),"Xfer_Container_Acknowledge");
+//SELECT - couleur
+$comp=$rep->getComponents('couleur');
+$test->assertClass("Xfer_Comp_Select",$comp,"Classe de couleur");
+$test->assertEquals("","".$comp->m_value,"Valeur de couleur");
+$test->assertEquals(7,COUNT($comp->m_select),'Nb select de couleur');
 //FLOAT - rappel
 $comp=$rep->getComponents('rappel');
 $test->assertClass("Xfer_Comp_FLOAT",$comp,"Classe de rappel");
 $test->assertEquals("0","".$comp->m_value,"Valeur de rappel");
 
-$test->CallAction("org_lucterios_task","Tasks_APAS_AddModifyAct",array("ORIGINE"=>"Tasks_APAS_AddModify","RECORD_ID"=>"","TABLE_NAME"=>"org_lucterios_task_Tasks","begin"=>"2011-06-01","description"=>"Exemple pour les tests","end"=>"2011-06-30","isTerminate"=>"n","owner"=>"0","timeLast"=>"5","timeTotal"=>"6","title"=>"Exemple de tache","type"=>"n","rappel"=>"30"),"Xfer_Container_Acknowledge");
+$test->CallAction("org_lucterios_task","Tasks_APAS_AddModifyAct",array("ORIGINE"=>"Tasks_APAS_AddModify","RECORD_ID"=>"",
+"TABLE_NAME"=>"org_lucterios_task_Tasks","begin"=>"2011-06-01","description"=>"Exemple pour les tests","end"=>"2011-06-30",
+"isTerminate"=>"n","owner"=>"0","couleur"=>"3","state"=>"0","title"=>"Exemple de tache","type"=>"n","rappel"=>"30"),"Xfer_Container_Acknowledge");
 
 $rep=$test->CallAction("org_lucterios_task","Tasks_APAS_List",array(),"Xfer_Container_Custom");
 //GRID - task
 $comp=$rep->getComponents('task');
-$test->assertEquals(3,count($comp->m_actions),"Nb grid actions de task");
+$test->assertEquals(4,count($comp->m_actions),"Nb grid actions de task");
 $test->assertEquals(6,count($comp->m_headers),"Nb grid headers de task");
 $test->assertEquals(1,count($comp->m_records),"Nb grid records de task");
 $rec=$comp->m_records[100];
-$test->assertEquals("Exemple de tache",$rec["title"],"Valeur de grid [100,title]");
+$test->assertEquals('{[FONT color="green"]}Exemple de tache{[/FONT]}',$rec["titleColor"],"Valeur de grid [100,titleColor]");
 $test->assertEquals("Exemple pour les tests",$rec["description"],"Valeur de grid [100,description]");
 $test->assertEquals("30/06/2011",$rec["end"],"Valeur de grid [100,end]");
 $test->assertEquals("",$rec["owner"],"Valeur de grid [100,owner]");
-$test->assertEquals("&#160;17% {[bold]}{[font color='green']}|||||{[/font]}{[font color='white']}||||||||||||||||||||{[/font]}{[/bold]} &#160;5h",$rec["valueGraph"],"Valeur de grid [100,valueGraph]");
-$test->assertEquals("",$rec["projet"],"Valeur de grid [100,projet]");
+$test->assertEquals("A faire",$rec["state"],"Valeur de grid [100,state]");
+$test->assertEquals("",$rec["organisation"],"Valeur de grid [100,organisation]");
 //LABELFORM - nb
 $comp=$rep->getComponents('nb');
 $test->assertEquals("Nombre total : 1","".$comp->m_value,"Valeur de nb");
@@ -167,13 +174,13 @@ $test->assertEquals("Nombre total : 1","".$comp->m_value,"Valeur de nb");
 $rep=$test->CallAction("org_lucterios_task","Tasks_APAS_AddModify",array("isTerminate"=>"n","task"=>"100",),"Xfer_Container_Custom");
 $test->assertEquals(2,COUNT($rep->m_actions),'nb action');
 //FLOAT - timeLast
-$comp=$rep->getComponents('timeLast');
-$test->assertClass("Xfer_Comp_Float",$comp,"Classe de timeLast");
-$test->assertEquals("5","".$comp->m_value,"Valeur de timeLast");
+$comp=$rep->getComponents('state');
+$test->assertClass("Xfer_Comp_Select",$comp,"Classe de timeLast");
+$test->assertEquals("0","".$comp->m_value,"Valeur de timeLast");
 //FLOAT - timeTotal
-$comp=$rep->getComponents('timeTotal');
-$test->assertClass("Xfer_Comp_Float",$comp,"Classe de timeTotal");
-$test->assertEquals("6","".$comp->m_value,"Valeur de timeTotal");
+$comp=$rep->getComponents('couleur');
+$test->assertClass("Xfer_Comp_Select",$comp,"Classe de timeTotal");
+$test->assertEquals("3","".$comp->m_value,"Valeur de timeTotal");
 //MEMO - description
 $comp=$rep->getComponents('description');
 $test->assertClass("Xfer_Comp_Memo",$comp,"Classe de description");
@@ -208,25 +215,28 @@ $comp=$rep->getComponents('rappel');
 $test->assertClass("Xfer_Comp_FLOAT",$comp,"Classe de rappel");
 $test->assertEquals("30","".$comp->m_value,"Valeur de rappel");
 
-$test->CallAction("org_lucterios_task","Tasks_APAS_AddModifyAct",array("ORIGINE"=>"Tasks_APAS_AddModify","RECORD_ID"=>"100","TABLE_NAME"=>"org_lucterios_task_Tasks","begin"=>"2011-06-01","description"=>"Exemple pour les tests","end"=>"2011-06-30","isTerminate"=>"n","owner"=>"0","task"=>"100","timeLast"=>"2","timeTotal"=>"6","title"=>"Exemple de tache","type"=>"n","rappel"=>'20'),"Xfer_Container_Acknowledge");
+$test->CallAction("org_lucterios_task","Tasks_APAS_AddModifyAct",array("ORIGINE"=>"Tasks_APAS_AddModify","RECORD_ID"=>"100","TABLE_NAME"=>"org_lucterios_task_Tasks",
+"begin"=>"2011-06-01","description"=>"Exemple pour les tests","end"=>"2011-06-30","isTerminate"=>"n","owner"=>"0","task"=>"100",
+"couleur"=>"4","state"=>"1","title"=>"Exemple de tache","type"=>"n","rappel"=>'20'),"Xfer_Container_Acknowledge");
 
 $rep=$test->CallAction("org_lucterios_task","Tasks_APAS_List",array(),"Xfer_Container_Custom");
 $test->assertEquals(1,COUNT($rep->m_actions),'nb action');
 //GRID - task
 $comp=$rep->getComponents('task');
-$test->assertEquals(3,count($comp->m_actions),"Nb grid actions de task");
+$test->assertEquals(4,count($comp->m_actions),"Nb grid actions de task");
 $test->assertEquals(6,count($comp->m_headers),"Nb grid headers de task");
 $test->assertEquals(1,count($comp->m_records),"Nb grid records de task");
 $rec=$comp->m_records[100];
-$test->assertEquals("&#160;67% {[bold]}{[font color='green']}|||||||||||||||||{[/font]}{[font color='white']}||||||||{[/font]}{[/bold]} &#160;2h",$rec["valueGraph"],"Valeur de grid [100,valueGraph]");
+$test->assertEquals("En cours",$rec["state"],"Valeur de grid [100,state]");
 
-$test->CallAction("org_lucterios_task","Tasks_APAS_AddModifyAct",array("ORIGINE"=>"Tasks_APAS_AddModify","RECORD_ID"=>"100","TABLE_NAME"=>"org_lucterios_task_Tasks","begin"=>"2011-06-01","description"=>"Exemple pour les tests","end"=>"2011-06-30","isTerminate"=>"n","owner"=>"0","task"=>"100","timeLast"=>"0","timeTotal"=>"6","title"=>"Exemple de tache","type"=>"n",),"Xfer_Container_Acknowledge");
+$test->CallAction("org_lucterios_task","Tasks_APAS_AddModifyAct",array("ORIGINE"=>"Tasks_APAS_AddModify","RECORD_ID"=>"100","TABLE_NAME"=>"org_lucterios_task_Tasks",
+"begin"=>"2011-06-01","description"=>"Exemple pour les tests","end"=>"2011-06-30","isTerminate"=>"n","owner"=>"0","task"=>"100","couleur"=>"1","state"=>"2","title"=>"Exemple de tache","type"=>"n",),"Xfer_Container_Acknowledge");
 
 $rep=$test->CallAction("org_lucterios_task","Tasks_APAS_List",array(),"Xfer_Container_Custom");
 $test->assertEquals(1,COUNT($rep->m_actions),'nb action');
 //GRID - task
 $comp=$rep->getComponents('task');
-$test->assertEquals(3,count($comp->m_actions),"Nb grid actions de task");
+$test->assertEquals(4,count($comp->m_actions),"Nb grid actions de task");
 $test->assertEquals(6,count($comp->m_headers),"Nb grid headers de task");
 $test->assertEquals(0,count($comp->m_records),"Nb grid records de task");
 //LABELFORM - nb
@@ -237,16 +247,16 @@ $rep=$test->CallAction("org_lucterios_task","Tasks_APAS_List",array("isTerminate
 $test->assertEquals(1,COUNT($rep->m_actions),'nb action');
 //GRID - task
 $comp=$rep->getComponents('task');
-$test->assertEquals(3,count($comp->m_actions),"Nb grid actions de task");
+$test->assertEquals(4,count($comp->m_actions),"Nb grid actions de task");
 $test->assertEquals(6,count($comp->m_headers),"Nb grid headers de task");
 $test->assertEquals(1,count($comp->m_records),"Nb grid records de task");
 $rec=$comp->m_records[100];
-$test->assertEquals("Exemple de tache",$rec["title"],"Valeur de grid [100,title]");
+$test->assertEquals('{[FONT color="blue"]}Exemple de tache{[/FONT]}',$rec["titleColor"],"Valeur de grid [100,titleColor]");
 $test->assertEquals("Exemple pour les tests",$rec["description"],"Valeur de grid [100,description]");
 $test->assertEquals("30/06/2011",$rec["end"],"Valeur de grid [100,end]");
 $test->assertEquals("",$rec["owner"],"Valeur de grid [100,owner]");
-$test->assertEquals("100% {[bold]}{[font color='green']}|||||||||||||||||||||||||{[/font]}{[font color='white']}{[/font]}{[/bold]} &#160;0h",$rec["valueGraph"],"Valeur de grid [100,valueGraph]");
-$test->assertEquals("",$rec["projet"],"Valeur de grid [100,projet]");
+$test->assertEquals("Fini",$rec["state"],"Valeur de grid [100,state]");
+$test->assertEquals("",$rec["organisation"],"Valeur de grid [100,organisation]");
 //CHECK - isTerminate
 $comp=$rep->getComponents('isTerminate');
 $test->assertClass("Xfer_Comp_Check",$comp,"Classe de isTerminate");
@@ -276,7 +286,7 @@ $rep=$test->CallAction("org_lucterios_task","Tasks_APAS_List",array("isTerminate
 $test->assertEquals(1,COUNT($rep->m_actions),'nb action');
 //GRID - task
 $comp=$rep->getComponents('task');
-$test->assertEquals(3,count($comp->m_actions),"Nb grid actions de task");
+$test->assertEquals(4,count($comp->m_actions),"Nb grid actions de task");
 $test->assertEquals(6,count($comp->m_headers),"Nb grid headers de task");
 $test->assertEquals(0,count($comp->m_records),"Nb grid records de task");
 //CHECK - isTerminate
