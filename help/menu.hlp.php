@@ -17,16 +17,15 @@
 //     Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 // 
 // 	Contributeurs: Fanny ALLEAUME, Pierre-Olivier VERSCHOORE, Laurent GAY
-//  // library file write by SDK tool
-// --- Last modification: Date 15 July 2010 21:52:18 By  ---
+//  // help file write by SDK tool
+// --- Last modification: Date 25 June 2010 18:09:55 By  ---
 
+$HelpTitle='La gestion de taches';
+$HelpPosition=725;
 
-function org_lucterios_task_APAS_status(&$result)
-{
-//@CODE_ACTION@
-
-// Fonction pour ajouter une information dans la fenêtre de résumé
-//@CODE_ACTION@
-}
+$HelpDescriptions=array();
+$HelpDescriptions[0]=array('taches','Les taches',1);
+$HelpDescriptions[1]=array('organisation','Les organisations de taches',1);
+$HelpDescriptions[2]=array('resume','Le résumé',1);
 
 ?>

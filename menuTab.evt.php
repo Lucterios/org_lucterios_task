@@ -20,12 +20,13 @@
 // library file write by SDK tool
 // --- Last modification: Date 11 March 2011 18:46:05 By  ---
 
-//@BEGIN@
-function org_lucterios_task_APAS_menuTab(&$menuTabs,$xfer){
+function org_lucterios_task_APAS_menuTab(&$menuTabs,$xfer)
+{
+//@CODE_ACTION@
 	$new_Menu=new Xfer_Menu_Item("menu_taches",'Taches courantes','task.png','org_lucterios_task',"menuTab",0,"","");
 	if ($xfer->checkActionRigth($new_Menu))
 		$menuTabs->addSubMenu($new_Menu);
 	return true;
+//@CODE_ACTION@
 }
-//@END@
 ?>
