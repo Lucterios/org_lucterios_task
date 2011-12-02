@@ -1,9 +1,22 @@
 <h1>La liste des taches</h1>
+<p>Le menu <i>Bureautique/Gestion des organisations et des taches/Liste des taches</i> vous permet de consulter la liste des taches que vous avez déjà enregistrées.</p>
 <center><img src='~org_lucterios_task$listTask.jpeg'/></center><br>
+<p>Par défaut, les taches terminées sont cachées, mais vous pouvez en décochant le filtre, afficher la totalité des taches enregistrées.</p>
+<p>Depuis cette écran vous avez bien sur la possibilité d'ajouter, éditer ou supprimer une tache. Vous pouvez aussi cloner une tache, vous préciserez alors le décalage temporel de la nouvelle tache créée depuis celle en model.</p>
 
 <h1>Creation d'une taches</h1> 
+<p>Depuis l'écran précédent vous avez donc la possibilité d'ajouter ou d'éditer une tache.</p>
 <center><img src='~org_lucterios_task$addTask.jpeg'/></center><br>
-
-<h1>Le rappel</h1> 
+<p>Précisons sur la signification de certains champs:
+<ul>
+<li>Etat</li> Un tache peux prendre 3 états possible : 'A faire', 'En cours' ou 'Fini'.
+<li>Résponsable</li> C'est la personne qui est considéré pour vous de s'occuper de cette tache.<br/>
+La sélection propose par défaut l'utilisateur connecté ainsi que les responsables de votre structure mais vous pouvez affecter quelqu'un d'autre à l'aide du bouton "+".
+<li>Couleur</li> C'est un attribut graphique pour vous permettre de classé vos taches suivant différente nature.<br/> A vous de définir le sens de chaque couleur pour votre structure.
+<li>Rappel</li> C'est le nombre de jour avant laquel un courriel de rappel sera envoyer au responsable de la tache.<br/>
+Pour que le mécanisme de rappel fonctionne, vous devez avoir configurer vos paramètres SNTP (voir <a href="-org_lucterios_contact$configuration">ici</a>).<br/>
+Dans le cas où vous n'avez pas attribué de responsable à cette tache, le courriel de rappel sera envoyé à l'adresse de votre structure.
+</ul>
+</p>
 
 
