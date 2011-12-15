@@ -1,10 +1,10 @@
 <h1>La liste des taches</h1>
-<p>Le menu <i>Bureautique/Gestion des organisations et des taches/Liste des taches</i> vous permet de consulter la liste des taches que vous avez déjà enregistrées.</p>
+<p>Le menu <i>Bureautique/Gestion des taches/Liste des taches</i> vous permet de consulter la liste des taches que vous avez déjà enregistrées.</p>
 <center><img src='~org_lucterios_task$listTask.jpeg'/></center><br>
 <p>Par défaut, les taches terminées sont cachées, mais vous pouvez en décochant le filtre, afficher la totalité des taches enregistrées.</p>
 <p>Depuis cette écran vous avez bien sur la possibilité d'ajouter, éditer ou supprimer une tache. Vous pouvez aussi cloner une tache, vous préciserez alors le décalage temporel de la nouvelle tache créée depuis celle en model.</p>
 
-<h1>Creation d'une taches</h1> 
+<h1>Creation d'une taches</h1>
 <p>Depuis l'écran précédent vous avez donc la possibilité d'ajouter ou d'éditer une tache.</p>
 <center><img src='~org_lucterios_task$addTask.jpeg'/></center><br>
 <p>Précisons sur la signification de certains champs:
@@ -18,5 +18,3 @@ Pour que le mécanisme de rappel fonctionne, vous devez avoir configurer vos para
 Dans le cas où vous n'avez pas attribué de responsable à cette tache, le courriel de rappel sera envoyé à l'adresse de votre structure.
 </ul>
 </p>
-
-

@@ -18,19 +18,19 @@
 // 
 // 		Contributeurs: Fanny ALLEAUME, Pierre-Olivier VERSCHOORE, Laurent GAY
 // setup file write by SDK tool
-// --- Last modification: Date 02 December 2011 19:45:44 By  ---
+// --- Last modification: Date 15 December 2011 0:37:32 By  ---
 
 $extention_name="org_lucterios_task";
 $extention_description="Modules de gestion de projets organisés en taches de travail {[newline]}Il permet également de suivre leur évolution.";
 $extention_appli="";
 $extention_famille="";
-$extention_titre="Gestionnaire de projet et de taches";
+$extention_titre="Gestionnaire de taches";
 $extension_libre=true;
 
 $version_max=1;
 $version_min=2;
 $version_release=1;
-$version_build=533;
+$version_build=558;
 
 $depencies=array();
 $depencies[0] = new Param_Depencies("CORE", 1, 3, 1, 3, false);
@@ -44,20 +44,20 @@ $rights[3] = new Param_Rigth("Administrer",90);
 $rights[4] = new Param_Rigth("Changer",50);
 
 $menus=array();
-$menus[0] = new Param_Menu("Gestion des organisations et de taches", "Bureautique", "", "task.png", "", 30 , 0, "Gestionnaire des organisations et{[newline]}des taches associées");
-$menus[1] = new Param_Menu("Liste des taches", "Gestion des organisations et de taches", "Tasks_APAS_List", "task.png", "", 10 , 0, "Gestion des taches.");
-$menus[2] = new Param_Menu("Recherche de taches", "Gestion des organisations et de taches", "Tasks_APAS_Search", "tasksearch.png", "", 20 , 1, "Recherche une tache suivant des critères.");
-$menus[3] = new Param_Menu("Liste des organisations", "Gestion des organisations et de taches", "Organisation_APAS_List", "organisation.png", "ctrl alt P", 5 , 0, "Gestion des organisations");
+$menus[0] = new Param_Menu("Gestion de taches", "Bureautique", "", "task.png", "", 30 , 0, "Gestionnaire de groupes de taches et{[newline]}des taches associées");
+$menus[1] = new Param_Menu("Liste des taches", "Gestion de taches", "Tasks_APAS_List", "task.png", "", 10 , 0, "Gestion des taches.");
+$menus[2] = new Param_Menu("Recherche de taches", "Gestion de taches", "Tasks_APAS_Search", "tasksearch.png", "", 20 , 1, "Recherche une tache suivant des critères.");
+$menus[3] = new Param_Menu("Liste des groupes de taches", "Gestion de taches", "Organisation_APAS_List", "organisation.png", "ctrl alt P", 5 , 0, "Gestion des groupes de taches");
 $menus[4] = new Param_Menu("Paramètrages de tache", "_Extensions (conf.)", "Param", "task.png", "", 100 , 1, "Paramètrages de tache");
 
 $actions=array();
 $actions[0] = new Param_Action("Changer les paramètres", "ChangeParams", 3);
-$actions[1] = new Param_Action("Valider une organisation", "Organisation_APAS_AddModifyAct", 1);
-$actions[2] = new Param_Action("Ajouter/Modifier une organisation", "Organisation_APAS_AddModify", 1);
-$actions[3] = new Param_Action("Supprimer une organisation", "Organisation_APAS_Del", 2);
-$actions[4] = new Param_Action("Fiche d'une organisation", "Organisation_APAS_Fiche", 0);
-$actions[5] = new Param_Action("Liste des organisations", "Organisation_APAS_List", 0);
-$actions[6] = new Param_Action("Imprimer une organisation", "Organisation_APAS_PrintFile", 0);
+$actions[1] = new Param_Action("Valider un groupe de taches", "Organisation_APAS_AddModifyAct", 1);
+$actions[2] = new Param_Action("Ajouter/Modifier un groupe de taches", "Organisation_APAS_AddModify", 1);
+$actions[3] = new Param_Action("Supprimer un groupe de taches", "Organisation_APAS_Del", 2);
+$actions[4] = new Param_Action("Fiche d'un groupe de taches", "Organisation_APAS_Fiche", 0);
+$actions[5] = new Param_Action("Liste des groupes de taches", "Organisation_APAS_List", 0);
+$actions[6] = new Param_Action("Imprimer un groupe de taches", "Organisation_APAS_PrintFile", 0);
 $actions[7] = new Param_Action("Paramètrages de tache", "Param", 3);
 $actions[8] = new Param_Action("Valider une tache", "Tasks_APAS_AddModifyAct", 1);
 $actions[9] = new Param_Action("Ajouter/Modifier une tache", "Tasks_APAS_AddModify", 1);
@@ -74,7 +74,7 @@ $actions[19] = new Param_Action("Cloner", "cloner", 1);
 $actions[20] = new Param_Action("", "menuTab", 0);
 
 $params=array();
-$params["messageRappel"] = new Param_Parameters("messageRappel", "##RESP##{[newline]}{[newline]}La tache '##NUM##' de votre Diacamma arrive bientôt à échéance.{[newline]}Pensez à la terminer prochainement.", "Message de rappel", 0, array('Multi'=>true));
+$params["messageRappel"] = new Param_Parameters("messageRappel", "##RESP##{[newline]}{[newline]}La tache '##NUM##' de votre logiciel de gestion arrive bientôt à échéance.{[newline]}Pensez à la terminer prochainement.", "Message de rappel", 0, array('Multi'=>true));
 
 $extend_tables=array();
 $extend_tables["Organisation"] = array("org_lucterios_task.Organisation","",array());

@@ -1,11 +1,11 @@
-<h1>La liste d'organisation</h1> 
-<p>Une organisation est un essemble de taches ayant un but globale commun (ex: organisation d'un stage, préparation d'un A.G., soirée détente, ...).<br/>
-Le menu <i>Bureautique/Gestion des organisations et des taches/Liste des organisations</i> vous permet de consulter la liste des organisations que vous avez déjà enregistrées.</p>
+<h1>La liste de groupes de taches</h1>
+<p>Un groupe de taches est un essemble de taches ayant un but globale commun (ex: organisation d'un stage, préparation d'un A.G., soirée détente, ...).<br/>
+Le menu <i>Bureautique/Gestion des taches/Liste des groupes de taches</i> vous permet de consulter la liste des groupes de taches que vous avez déjà enregistrées.</p>
 <center><img src='~org_lucterios_task$listOrganisation.jpeg'/></center><br>
-<p>Comme pour les taches, vous avez la possibilité de cloner une organisation. Cette outil est particulièrement pratique lorsque vous organiser cycliquement un même évenement.</p>
+<p>Comme pour les taches, vous avez la possibilité de cloner un groupe de taches. Cette outil est particulièrement pratique lorsque vous organiser cycliquement un même évenement.</p>
 
-<h1>Edition d'une organisation</h1> 
-<p>Une organisation n'est composée, en plus de son nom et d'un description, que d'un ensemble de taches.<p>
+<h1>Edition d'un groupe de taches</h1>
+<p>Un groupe de taches n'est composé, en plus de son nom et d'un description, que d'un ensemble de taches.<p>
 <center><img src='~org_lucterios_task$addOrganisation.jpeg'/></center><br>
 <p>Vous pouvez d'un coup d'oeil savoir la date de finalisation, c'est à dire la date de la tache se terminant en dernier.<br>
-De la même façon, vous avez les niveaux d'avancement de cette organisation, c'est à dire le pourcentage de taches terminées.</p>
+De la même façon, vous avez les niveaux d'avancement de ce groupe de taches, c'est à dire le pourcentage de taches terminées.</p>

@@ -18,7 +18,7 @@
 // 
 // 		Contributeurs: Fanny ALLEAUME, Pierre-Olivier VERSCHOORE, Laurent GAY
 // Action file write by SDK tool
-// --- Last modification: Date 18 November 2011 19:10:09 By  ---
+// --- Last modification: Date 15 December 2011 0:26:23 By  ---
 
 require_once('CORE/xfer_exception.inc.php');
 require_once('CORE/rights.inc.php');
@@ -31,7 +31,7 @@ require_once('CORE/xfer_custom.inc.php');
 //@XFER:custom@
 
 
-//@DESC@Liste des organisations
+//@DESC@Liste des groupes de taches
 //@PARAM@ 
 
 
@@ -42,7 +42,7 @@ function Organisation_APAS_List($Params)
 $self=new DBObj_org_lucterios_task_Organisation();
 try {
 $xfer_result=&new Xfer_Container_Custom("org_lucterios_task","Organisation_APAS_List",$Params);
-$xfer_result->Caption="Liste des organisations";
+$xfer_result->Caption="Liste des groupes de taches";
 //@CODE_ACTION@
 $img=new  Xfer_Comp_Image("img");
 $img->setLocation(0,0);
@@ -51,7 +51,7 @@ $xfer_result->addComponent($img);
 $lbl=new  Xfer_Comp_LabelForm("titre");
 $lbl->setLocation(1,0);
 $xfer_result->addComponent($lbl);
-$lbl->setValue("{[center]}{[bold]}Lister des organisations{[/bold]}{[/center]}");
+$lbl->setValue("{[center]}{[bold]}Lister des groupes de taches{[/bold]}{[/center]}");
 $self->find();
 $grid = $self->getGrid($Params);
 $grid->setLocation(0,1,2);

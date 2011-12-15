@@ -18,7 +18,7 @@
 // 
 // 		Contributeurs: Fanny ALLEAUME, Pierre-Olivier VERSCHOORE, Laurent GAY
 // Action file write by SDK tool
-// --- Last modification: Date 18 November 2011 19:10:44 By  ---
+// --- Last modification: Date 15 December 2011 0:26:31 By  ---
 
 require_once('CORE/xfer_exception.inc.php');
 require_once('CORE/rights.inc.php');
@@ -31,7 +31,7 @@ require_once('CORE/xfer_printing.inc.php');
 //@XFER:print@
 
 
-//@DESC@Imprimer une organisation
+//@DESC@Imprimer un groupe de taches
 //@PARAM@ 
 //@INDEX:Organisation
 
@@ -45,7 +45,7 @@ $Organisation=getParams($Params,"Organisation",-1);
 if ($Organisation>=0) $self->get($Organisation);
 try {
 $xfer_result=&new Xfer_Container_Print("org_lucterios_task","Organisation_APAS_PrintFile",$Params);
-$xfer_result->Caption="Imprimer une organisation";
+$xfer_result->Caption="Imprimer un groupe de taches";
 //@CODE_ACTION@
 require_once "CORE/PrintAction.inc.php";
 $print_action=new PrintAction("org_lucterios_task","Organisation_APAS_Fiche",$Params);
