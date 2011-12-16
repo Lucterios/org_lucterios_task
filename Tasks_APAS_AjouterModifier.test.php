@@ -18,7 +18,7 @@
 // 
 // 		Contributeurs: Fanny ALLEAUME, Pierre-Olivier VERSCHOORE, Laurent GAY
 // Test file write by SDK tool
-// --- Last modification: Date 20 November 2011 20:06:59 By  ---
+// --- Last modification: Date 16 December 2011 0:23:33 By  ---
 
 
 //@TABLES@
@@ -73,7 +73,7 @@ $test->assertEquals("Description",$headers["description"]->m_descript,'Header #2
 $test->assertEquals("Fin",$headers["end"]->m_descript,'Header #3');
 $test->assertEquals("Responsable",$headers["owner"]->m_descript,'Header #4');
 $test->assertEquals("Etat",$headers["state"]->m_descript,'Header #5');
-$test->assertEquals("Organisation associée",$headers["organisation"]->m_descript,'Header #5');
+$test->assertEquals("Groupe associé",$headers["organisation"]->m_descript,'Header #5');
 //LABELFORM - isTerminatelbl
 $comp=$rep->getComponents('isTerminatelbl');
 $test->assertClass("Xfer_Comp_LabelForm",$comp,"Classe de isTerminatelbl");
