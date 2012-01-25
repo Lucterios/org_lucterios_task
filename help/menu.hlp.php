@@ -18,7 +18,7 @@
 // 
 // 		Contributeurs: Fanny ALLEAUME, Pierre-Olivier VERSCHOORE, Laurent GAY
 // help file write by SDK tool
-// --- Last modification: Date 15 December 2011 0:36:53 By  ---
+// --- Last modification: Date 24 January 2012 22:44:57 By  ---
 
 $HelpTitle='La gestion de taches';
 $HelpPosition=725;
