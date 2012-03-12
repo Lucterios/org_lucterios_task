@@ -54,7 +54,7 @@ imagepng($im,$file_temp);
 $file_size = filesize($file_temp);
 $handle = fopen($file_temp,'r');
 $img = fread($handle,$file_size);
-$img_base64 = chunk_explode(base64_encode($img));
+$img_base64 = chunk_split(base64_encode($img));
 fclose($handle);
 
 @unlink($file_temp);
