@@ -17,7 +17,7 @@
 // 	Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 // 
 // 		Contributeurs: Fanny ALLEAUME, Pierre-Olivier VERSCHOORE, Laurent GAY// Method file write by SDK tool
-// --- Last modification: Date 10 November 2011 4:59:57 By  ---
+// --- Last modification: Date 12 March 2012 2:40:12 By  ---
 
 require_once('CORE/xfer_exception.inc.php');
 require_once('CORE/rights.inc.php');
@@ -32,7 +32,7 @@ require_once('extensions/org_lucterios_task/Tasks.tbl.php');
 function Tasks_APAS_findFields(&$self)
 {
 //@CODE_ACTION@
-$FindFields=array("title","description","begin","end","owner[nom]","owner[prenom]","timeLast","timeTotal","type","projet[nom]","projet[description]");
+$FindFields=array("title","description","begin","end","state","couleur","projet[nom]","projet[description]","owner[nom]","owner[prenom]","rappel");
 return $FindFields;
 //@CODE_ACTION@
 }

@@ -17,7 +17,7 @@
 // 	Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 // 
 // 		Contributeurs: Fanny ALLEAUME, Pierre-Olivier VERSCHOORE, Laurent GAY// Action file write by SDK tool
-// --- Last modification: Date 10 November 2011 5:42:11 By  ---
+// --- Last modification: Date 12 March 2012 2:42:49 By  ---
 
 require_once('CORE/xfer_exception.inc.php');
 require_once('CORE/rights.inc.php');
@@ -55,12 +55,14 @@ $lbl=new  Xfer_Comp_LabelForm("titre");
 $lbl->setLocation(1,0);
 $xfer_result->addComponent($lbl);
 if ($IsSearch!=0) {
-	$q='(type=0)';
+	$q='';
 	$contact=new DBObj_org_lucterios_contacts_personnePhysique;
 	if ($contact->findConnected()) {
-		$q.=" OR (owner=".$contact->id.")";
+		$q.="((type='n') OR (owner=".$contact->id."))";
 	}
-	$self->setForSearch($Params,'projet,end',$q);
+	else
+		$q.="(type='n')";
+	$self->setForSearch($Params,'organisation,end',$q);
 	include_once("CORE/DBFind.inc.php");
 	$lbl->setValue("{[center]}{[bold]}Résultat de la recherche{[/bold]}{[newline]}{[newline]}".DBFind::getCriteriaText($self,$Params)."{[/center]}");
 }
