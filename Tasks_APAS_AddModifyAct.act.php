@@ -17,7 +17,7 @@
 // 	Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 // 
 // 		Contributeurs: Fanny ALLEAUME, Pierre-Olivier VERSCHOORE, Laurent GAY// Action file write by SDK tool
-// --- Last modification: Date 18 November 2011 2:10:12 By  ---
+// --- Last modification: Date 28 March 2012 6:02:13 By  ---
 
 require_once('CORE/xfer_exception.inc.php');
 require_once('CORE/rights.inc.php');
@@ -55,13 +55,19 @@ if($task>0)
 $self->setFrom($Params);
 if ($self->timeLast>$self->timeTotal)
 	$self->timeTotal=$self->timeLast;
+if ($Params['organisation']!=0)
+	$self->type='n';
 if ($find)
 	$self->update();
 else
 	$self->insert();
 if ($Params['owner']==0) {
 	global $connect;
-	$connect->execute("UPDATE org_lucterios_task_Tasks SET owner=NULL WHERE id=".$self->id,true);
+	$connect->execute("UPDATE org_lucterios_task_Tasks SET owner=NULL,type='n' WHERE id=".$self->id,true);
+}
+if ($Params['organisation']==0) {
+	global $connect;
+	$connect->execute("UPDATE org_lucterios_task_Tasks SET organisation=NULL WHERE id=".$self->id,true);
 }
 //@CODE_ACTION@
 	$connect->commit();
