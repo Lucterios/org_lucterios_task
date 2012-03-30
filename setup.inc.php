@@ -17,7 +17,7 @@
 // 	Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 // 
 // 		Contributeurs: Fanny ALLEAUME, Pierre-Olivier VERSCHOORE, Laurent GAY// setup file write by SDK tool
-// --- Last modification: Date 28 March 2012 6:02:13 By  ---
+// --- Last modification: Date 28 March 2012 12:21:19 By  ---
 
 $extention_name="org_lucterios_task";
 $extention_description="Modules de gestion de projets organisés en taches de travail {[newline]}Il permet également de suivre leur évolution.";
@@ -29,7 +29,7 @@ $extension_libre=true;
 $version_max=1;
 $version_min=2;
 $version_release=3;
-$version_build=577;
+$version_build=580;
 
 $depencies=array();
 $depencies[0] = new Param_Depencies("CORE", 1, 3, 1, 3, false);

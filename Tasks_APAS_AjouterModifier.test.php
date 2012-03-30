@@ -1,13 +1,13 @@
 <?php
-// 	This file is part of Diacamma, a software developped by "Le Sanglier du Libre" (http://www.sd-libre.fr)
+// 	This file is part of Lucterios/Diacamma, a software developped by "Le Sanglier du Libre" (http://www.sd-libre.fr)
 // 	Thanks to have payed a retribution for using this module.
 // 
-// 	Diacamma is free software; you can redistribute it and/or modify
+// 	Lucterios/Diacamma is free software; you can redistribute it and/or modify
 // 	it under the terms of the GNU General Public License as published by
 // 	the Free Software Foundation; either version 2 of the License, or
 // 	(at your option) any later version.
 // 
-// 	Diacamma is distributed in the hope that it will be useful,
+// 	Lucterios/Diacamma is distributed in the hope that it will be useful,
 // 	but WITHOUT ANY WARRANTY; without even the implied warranty of
 // 	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // 	GNU General Public License for more details.
@@ -16,9 +16,8 @@
 // 	along with Lucterios; if not, write to the Free Software
 // 	Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 // 
-// 		Contributeurs: Fanny ALLEAUME, Pierre-Olivier VERSCHOORE, Laurent GAY
-// Test file write by SDK tool
-// --- Last modification: Date 16 December 2011 0:23:33 By  ---
+// 		Contributeurs: Fanny ALLEAUME, Pierre-Olivier VERSCHOORE, Laurent GAY// Test file write by SDK tool
+// --- Last modification: Date 28 March 2012 12:21:19 By  ---
 
 
 //@TABLES@
@@ -97,7 +96,7 @@ $act=$rep->m_actions[1];
 $test->assertEquals("_Annuler",$act->m_title,'Titre action #2');
 $test->assertEquals("",$act->m_extension,'Ext action #2');
 $test->assertEquals("",$act->m_action,'Act action #2');
-$test->assertEquals(20,$rep->getComponentCount(),'nb component');
+$test->assertEquals(22,$rep->getComponentCount(),'nb component');
 //IMAGE - img
 $comp=$rep->getComponents('img');
 $test->assertClass("Xfer_Comp_Image",$comp,"Classe de img");
