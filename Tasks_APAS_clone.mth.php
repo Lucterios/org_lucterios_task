@@ -17,7 +17,7 @@
 // 	Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 // 
 // 		Contributeurs: Fanny ALLEAUME, Pierre-Olivier VERSCHOORE, Laurent GAY// Method file write by SDK tool
-// --- Last modification: Date 18 November 2011 5:55:25 By  ---
+// --- Last modification: Date 23 April 2012 1:57:32 By  ---
 
 require_once('CORE/xfer_exception.inc.php');
 require_once('CORE/rights.inc.php');
@@ -43,7 +43,10 @@ $DBTask->owner=$self->owner;
 $DBTask->type=$self->type;
 $DBTask->rappel=$self->rappel;
 $DBTask->couleur=$self->couleur;
-$DBTask->organisation=$newOrganisation;
+if ($newOrganisation==0)
+	$DBTask->organisation=$self->organisation;
+else
+	$DBTask->organisation=$newOrganisation;
 $DBTask->insert();
 return $DBTask->id;
 //@CODE_ACTION@

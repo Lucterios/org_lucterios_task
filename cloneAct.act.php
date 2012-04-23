@@ -17,7 +17,7 @@
 // 	Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 // 
 // 		Contributeurs: Fanny ALLEAUME, Pierre-Olivier VERSCHOORE, Laurent GAY// Action file write by SDK tool
-// --- Last modification: Date 18 November 2011 5:57:35 By  ---
+// --- Last modification: Date 23 April 2012 2:02:01 By  ---
 
 require_once('CORE/xfer_exception.inc.php');
 require_once('CORE/rights.inc.php');
@@ -63,9 +63,14 @@ else {
 	$DBObj->get($Organisation);
 }
 $id=$DBObj->clone($timeOffset);
-$xfer_result->m_context['task']=$id;
-$xfer_result->m_context['Organisation']=$id;
-$xfer_result->redirectAction($DBObj->NewAction('','','Fiche',FORMTYPE_MODAL,CLOSE_NO));
+if ($task>0) {
+	$xfer_result->m_context['task']=$id;
+	$xfer_result->redirectAction($DBObj->NewAction('','','AddModify',FORMTYPE_MODAL,CLOSE_NO));
+}
+else {
+	$xfer_result->m_context['Organisation']=$id;
+	$xfer_result->redirectAction($DBObj->NewAction('','','Fiche',FORMTYPE_MODAL,CLOSE_NO));
+}
 //@CODE_ACTION@
 	$connect->commit();
 }catch(Exception $e) {
