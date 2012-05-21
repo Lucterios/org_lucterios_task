@@ -62,6 +62,7 @@ if ($IsSearch!=0) {
 	}
 	else
 		$q.="(type='n')";
+	$xfer_result->clearSearchParam();
 	$self->setForSearch($Params,'organisation,end',$q);
 	include_once("CORE/DBFind.inc.php");
 	$lbl->setValue("{[center]}{[bold]}Résultat de la recherche{[/bold]}{[newline]}{[newline]}".DBFind::getCriteriaText($self,$Params)."{[/center]}");
