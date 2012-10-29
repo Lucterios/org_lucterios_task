@@ -1,23 +1,21 @@
 <?php
-// 	This file is part of Lucterios/Diacamma, a software developped by "Le Sanglier du Libre" (http://www.sd-libre.fr)
-// 	Thanks to have payed a retribution for using this module.
+// This file is part of Lucterios/Diacamma, a software developped by 'Le Sanglier du Libre' (http://www.sd-libre.fr)
+// thanks to have payed a retribution for using this module.
 // 
-// 	Lucterios/Diacamma is free software; you can redistribute it and/or modify
-// 	it under the terms of the GNU General Public License as published by
-// 	the Free Software Foundation; either version 2 of the License, or
-// 	(at your option) any later version.
+// Lucterios/Diacamma is free software; you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation; either version 2 of the License, or
+// (at your option) any later version.
 // 
-// 	Lucterios/Diacamma is distributed in the hope that it will be useful,
-// 	but WITHOUT ANY WARRANTY; without even the implied warranty of
-// 	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-// 	GNU General Public License for more details.
+// Lucterios/Diacamma is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
 // 
-// 	You should have received a copy of the GNU General Public License
-// 	along with Lucterios; if not, write to the Free Software
-// 	Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
-// 
-// 		Contributeurs: Fanny ALLEAUME, Pierre-Olivier VERSCHOORE, Laurent GAY// Action file write by SDK tool
-// --- Last modification: Date 12 March 2012 2:42:49 By  ---
+// You should have received a copy of the GNU General Public License
+// along with Lucterios; if not, write to the Free Software
+// Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+// Action file write by Lucterios SDK tool
 
 require_once('CORE/xfer_exception.inc.php');
 require_once('CORE/rights.inc.php');
@@ -31,7 +29,7 @@ require_once('CORE/xfer_custom.inc.php');
 //@XFER:custom@
 
 
-//@DESC@Liste des taches
+//@DESC@Liste des tâches
 //@PARAM@ IsSearch=0
 //@PARAM@ isTerminate='n'
 
@@ -45,7 +43,7 @@ $isTerminate=getParams($Params,"isTerminate",'n');
 $self=new DBObj_org_lucterios_task_Tasks();
 try {
 $xfer_result=&new Xfer_Container_Custom("org_lucterios_task","Tasks_APAS_List",$Params);
-$xfer_result->Caption="Liste des taches";
+$xfer_result->Caption="Liste des tâches";
 //@CODE_ACTION@
 $img=new  Xfer_Comp_Image("img");
 $img->setLocation(0,0);
@@ -68,7 +66,7 @@ if ($IsSearch!=0) {
 	$lbl->setValue("{[center]}{[bold]}Résultat de la recherche{[/bold]}{[newline]}{[newline]}".DBFind::getCriteriaText($self,$Params)."{[/center]}");
 }
 else {
-	$lbl->setValue("{[center]}{[bold]}Liste des taches{[/bold]}{[/center]}");
+	$lbl->setValue("{[center]}{[bold]}Liste des tâches{[/bold]}{[/center]}");
 	$self->getList($Params);
 
 	$lbl=new  Xfer_Comp_LabelForm("isTerminatelbl");

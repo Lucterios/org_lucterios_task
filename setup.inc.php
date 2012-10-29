@@ -1,13 +1,13 @@
 <?php
-// This file is part of Lucterios, a software developped by "Le Sanglier du Libre" (http://www.sd-libre.fr)
-// Thanks to have payed a donation for using this module.
+// This file is part of Lucterios/Diacamma, a software developped by 'Le Sanglier du Libre' (http://www.sd-libre.fr)
+// thanks to have payed a retribution for using this module.
 // 
-// Lucterios is free software; you can redistribute it and/or modify
+// Lucterios/Diacamma is free software; you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation; either version 2 of the License, or
 // (at your option) any later version.
 // 
-// Lucterios is distributed in the hope that it will be useful,
+// Lucterios/Diacamma is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
@@ -18,16 +18,16 @@
 // setup file write by Lucterios SDK tool
 
 $extention_name="org_lucterios_task";
-$extention_description="Modules de gestion de projets organisés en taches de travail {[newline]}Il permet également de suivre leur évolution.";
+$extention_description="Modules de gestion de projets organisés en tâches de travail {[newline]}Il permet également de suivre leur évolution.";
 $extention_appli="";
 $extention_famille="";
-$extention_titre="Gestionnaire de taches";
+$extention_titre="Gestionnaire de tâches";
 $extension_libre=true;
 
 $version_max=1;
 $version_min=2;
-$version_release=6;
-$version_build=585;
+$version_release=7;
+$version_build=609;
 
 $depencies=array();
 $depencies[0] = new Param_Depencies("CORE", 1, 4, 1, 3, false);
@@ -41,29 +41,29 @@ $rights[3] = new Param_Rigth("Administrer",90);
 $rights[4] = new Param_Rigth("Changer",50);
 
 $menus=array();
-$menus[0] = new Param_Menu("Gestion de taches", "Bureautique", "", "task.png", "", 30 , 0, "Gestionnaire de groupes de taches et{[newline]}des taches associées");
-$menus[1] = new Param_Menu("Liste des taches", "Gestion de taches", "Tasks_APAS_List", "task.png", "", 10 , 0, "Gestion des taches.");
-$menus[2] = new Param_Menu("Recherche de taches", "Gestion de taches", "Tasks_APAS_Search", "tasksearch.png", "", 20 , 1, "Recherche une tache suivant des critères.");
-$menus[3] = new Param_Menu("Liste des groupes de taches", "Gestion de taches", "Organisation_APAS_List", "organisation.png", "ctrl alt P", 5 , 0, "Gestion des groupes de taches");
-$menus[4] = new Param_Menu("Paramètrages de tache", "_Extensions (conf.)", "Param", "task.png", "", 100 , 1, "Paramètrages de tache");
+$menus[0] = new Param_Menu("Gestion de tâches", "Bureautique", "", "task.png", "", 30 , 0, "Gestionnaire de groupes de tâches et{[newline]}des tâches associées");
+$menus[1] = new Param_Menu("Liste des tâches", "Gestion de tâches", "Tasks_APAS_List", "task.png", "", 10 , 0, "Gestion des tâches.");
+$menus[2] = new Param_Menu("Recherche de tâches", "Gestion de tâches", "Tasks_APAS_Search", "tasksearch.png", "", 20 , 1, "Recherche une tâche suivant des critères.");
+$menus[3] = new Param_Menu("Liste des groupes de tâches", "Gestion de tâches", "Organisation_APAS_List", "organisation.png", "ctrl alt P", 5 , 0, "Gestion des groupes de tâches");
+$menus[4] = new Param_Menu("Paramètrages de tâche", "_Extensions (conf.)", "Param", "task.png", "", 100 , 1, "Paramètrages de tâche");
 
 $actions=array();
 $actions[0] = new Param_Action("Changer les paramètres", "ChangeParams", 3);
-$actions[1] = new Param_Action("Valider un groupe de taches", "Organisation_APAS_AddModifyAct", 1);
-$actions[2] = new Param_Action("Ajouter/Modifier un groupe de taches", "Organisation_APAS_AddModify", 1);
-$actions[3] = new Param_Action("Supprimer un groupe de taches", "Organisation_APAS_Del", 2);
-$actions[4] = new Param_Action("Fiche d'un groupe de taches", "Organisation_APAS_Fiche", 0);
-$actions[5] = new Param_Action("Liste des groupes de taches", "Organisation_APAS_List", 0);
-$actions[6] = new Param_Action("Imprimer un groupe de taches", "Organisation_APAS_PrintFile", 0);
+$actions[1] = new Param_Action("Valider un groupe de tâches", "Organisation_APAS_AddModifyAct", 1);
+$actions[2] = new Param_Action("Ajouter/Modifier un groupe de tâches", "Organisation_APAS_AddModify", 1);
+$actions[3] = new Param_Action("Supprimer un groupe de tâches", "Organisation_APAS_Del", 2);
+$actions[4] = new Param_Action("Fiche d'un groupe de tâches", "Organisation_APAS_Fiche", 0);
+$actions[5] = new Param_Action("Liste des groupes de tâches", "Organisation_APAS_List", 0);
+$actions[6] = new Param_Action("Imprimer un groupe de tâches", "Organisation_APAS_PrintFile", 0);
 $actions[7] = new Param_Action("Paramètrages de tache", "Param", 3);
-$actions[8] = new Param_Action("Valider une tache", "Tasks_APAS_AddModifyAct", 1);
-$actions[9] = new Param_Action("Ajouter/Modifier une tache", "Tasks_APAS_AddModify", 1);
-$actions[10] = new Param_Action("Commencer une tache", "Tasks_APAS_Commencer", 4);
-$actions[11] = new Param_Action("Supprimer une tache", "Tasks_APAS_Del", 2);
-$actions[12] = new Param_Action("Fiche d'une tache", "Tasks_APAS_Fiche", 0);
-$actions[13] = new Param_Action("Finir une tache", "Tasks_APAS_Finir", 4);
-$actions[14] = new Param_Action("Liste des taches", "Tasks_APAS_List", 0);
-$actions[15] = new Param_Action("Rechercher une tache", "Tasks_APAS_Search", 0);
+$actions[8] = new Param_Action("Valider une tâche", "Tasks_APAS_AddModifyAct", 1);
+$actions[9] = new Param_Action("Ajouter/Modifier une tâche", "Tasks_APAS_AddModify", 1);
+$actions[10] = new Param_Action("Commencer une tâche", "Tasks_APAS_Commencer", 4);
+$actions[11] = new Param_Action("Supprimer une tâche", "Tasks_APAS_Del", 2);
+$actions[12] = new Param_Action("Fiche d'une tâche", "Tasks_APAS_Fiche", 0);
+$actions[13] = new Param_Action("Finir une tâche", "Tasks_APAS_Finir", 4);
+$actions[14] = new Param_Action("Liste des tâches", "Tasks_APAS_List", 0);
+$actions[15] = new Param_Action("Rechercher une tâche", "Tasks_APAS_Search", 0);
 $actions[16] = new Param_Action("Selectionner d'un contact comme responsable", "Tasks_APAS_SelectRespVal", 3);
 $actions[17] = new Param_Action("Selectionner d'un contact comme responsable", "Tasks_APAS_SelectResp", 3);
 $actions[18] = new Param_Action("Cloner", "cloneAct", 1);
