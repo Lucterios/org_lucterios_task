@@ -44,7 +44,7 @@ $test->assertEquals("extensions/org_lucterios_task/images/task.png","".$comp->m_
 //LABELFORM - titre
 $comp=$rep->getComponents('titre');
 $test->assertClass("Xfer_Comp_LabelForm",$comp,"Classe de titre");
-$test->assertEquals("{[center]}{[bold]}Liste des taches{[/bold]}{[/center]}","".$comp->m_value,"Valeur de titre");
+$test->assertEquals("{[center]}{[bold]}Liste des tâches{[/bold]}{[/center]}","".$comp->m_value,"Valeur de titre");
 //GRID - task
 $comp=$rep->getComponents('task');
 $test->assertEquals(4,count($comp->m_actions),"Nb grid actions de task");
@@ -76,7 +76,7 @@ $test->assertEquals("Groupe associé",$headers["organisation"]->m_descript,'Heade
 //LABELFORM - isTerminatelbl
 $comp=$rep->getComponents('isTerminatelbl');
 $test->assertClass("Xfer_Comp_LabelForm",$comp,"Classe de isTerminatelbl");
-$test->assertEquals("Voir les taches terminées","".$comp->m_value,"Valeur de isTerminatelbl");
+$test->assertEquals("Voir les tâches terminées","".$comp->m_value,"Valeur de isTerminatelbl");
 //CHECK - isTerminate
 $comp=$rep->getComponents('isTerminate');
 $test->assertClass("Xfer_Comp_Check",$comp,"Classe de isTerminate");

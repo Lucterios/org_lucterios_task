@@ -70,7 +70,7 @@ else {
 	$self->getList($Params);
 
 	$lbl=new  Xfer_Comp_LabelForm("isTerminatelbl");
-	$lbl->setValue("Voir les taches terminées");
+	$lbl->setValue("Voir les tâches terminées");
 	$lbl->setLocation(0,2);
 	$xfer_result->addComponent($lbl);
 	$edt=new  Xfer_Comp_Check("isTerminate");
