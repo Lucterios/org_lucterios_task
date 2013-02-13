@@ -27,10 +27,10 @@ $extension_libre=true;
 $version_max=1;
 $version_min=2;
 $version_release=7;
-$version_build=610;
+$version_build=611;
 
 $depencies=array();
-$depencies[0] = new Param_Depencies("CORE", 1, 4, 1, 3, false);
+$depencies[0] = new Param_Depencies("CORE", 1, 5, 1, 4, false);
 $depencies[1] = new Param_Depencies("org_lucterios_contacts", 1, 4, 1, 3, false);
 
 $rights=array();
