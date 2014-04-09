@@ -39,7 +39,7 @@ require_once('CORE/xfer_custom.inc.php');
 function ChangeParams($Params)
 {
 try {
-$xfer_result=&new Xfer_Container_Custom("org_lucterios_task","ChangeParams",$Params);
+$xfer_result=new Xfer_Container_Custom("org_lucterios_task","ChangeParams",$Params);
 $xfer_result->Caption="Changer les paramètres";
 //@CODE_ACTION@
 $img=new  Xfer_Comp_Image('img');

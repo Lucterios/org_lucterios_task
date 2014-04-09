@@ -42,7 +42,7 @@ $IsSearch=getParams($Params,"IsSearch",0);
 $isTerminate=getParams($Params,"isTerminate",'n');
 $self=new DBObj_org_lucterios_task_Tasks();
 try {
-$xfer_result=&new Xfer_Container_Custom("org_lucterios_task","Tasks_APAS_List",$Params);
+$xfer_result=new Xfer_Container_Custom("org_lucterios_task","Tasks_APAS_List",$Params);
 $xfer_result->Caption="Liste des tâches";
 //@CODE_ACTION@
 $img=new  Xfer_Comp_Image("img");

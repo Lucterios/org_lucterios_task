@@ -41,7 +41,7 @@ $self=new DBObj_org_lucterios_task_Organisation();
 $Organisation=getParams($Params,"Organisation",-1);
 if ($Organisation>=0) $self->get($Organisation);
 try {
-$xfer_result=&new Xfer_Container_Print("org_lucterios_task","Organisation_APAS_PrintFile",$Params);
+$xfer_result=new Xfer_Container_Print("org_lucterios_task","Organisation_APAS_PrintFile",$Params);
 $xfer_result->Caption="Imprimer un groupe de tâches";
 //@CODE_ACTION@
 require_once "CORE/PrintAction.inc.php";

@@ -38,7 +38,7 @@ function Tasks_APAS_Search($Params)
 {
 $self=new DBObj_org_lucterios_task_Tasks();
 try {
-$xfer_result=&new Xfer_Container_Custom("org_lucterios_task","Tasks_APAS_Search",$Params);
+$xfer_result=new Xfer_Container_Custom("org_lucterios_task","Tasks_APAS_Search",$Params);
 $xfer_result->Caption="Rechercher une tâche";
 //@CODE_ACTION@
 $img=new  Xfer_Comp_Image("img");

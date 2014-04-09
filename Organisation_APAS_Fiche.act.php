@@ -43,7 +43,7 @@ if ($Organisation>=0) $self->get($Organisation);
 
 $self->lockRecord("Organisation_APAS_Fiche");
 try {
-$xfer_result=&new Xfer_Container_Custom("org_lucterios_task","Organisation_APAS_Fiche",$Params);
+$xfer_result=new Xfer_Container_Custom("org_lucterios_task","Organisation_APAS_Fiche",$Params);
 $xfer_result->Caption="Fiche d'un groupe de tâches";
 $xfer_result->m_context['ORIGINE']="Organisation_APAS_Fiche";
 $xfer_result->m_context['TABLE_NAME']=$self->__table;

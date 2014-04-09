@@ -45,7 +45,7 @@ $self=new DBObj_org_lucterios_task_Organisation();
 global $connect;
 $connect->begin();
 try {
-$xfer_result=&new Xfer_Container_Acknowledge("org_lucterios_task","Organisation_APAS_AddModifyAct",$Params);
+$xfer_result=new Xfer_Container_Acknowledge("org_lucterios_task","Organisation_APAS_AddModifyAct",$Params);
 $xfer_result->Caption="Valider un groupe de tâches";
 //@CODE_ACTION@
 if($Organisation>0)

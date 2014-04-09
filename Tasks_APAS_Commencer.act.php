@@ -45,7 +45,7 @@ if ($task>=0) $self->get($task);
 global $connect;
 $connect->begin();
 try {
-$xfer_result=&new Xfer_Container_Acknowledge("org_lucterios_task","Tasks_APAS_Commencer",$Params);
+$xfer_result=new Xfer_Container_Acknowledge("org_lucterios_task","Tasks_APAS_Commencer",$Params);
 $xfer_result->Caption="Commencer une tâche";
 //@CODE_ACTION@
 $self->state=1;

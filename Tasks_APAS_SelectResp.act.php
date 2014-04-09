@@ -46,7 +46,7 @@ $self=new DBObj_org_lucterios_task_Tasks();
 $task=getParams($Params,"task",-1);
 if ($task>=0) $self->get($task);
 try {
-$xfer_result=&new Xfer_Container_Custom("org_lucterios_task","Tasks_APAS_SelectResp",$Params);
+$xfer_result=new Xfer_Container_Custom("org_lucterios_task","Tasks_APAS_SelectResp",$Params);
 $xfer_result->Caption="Selectionner d'un contact comme responsable";
 //@CODE_ACTION@
 $img=new  Xfer_Comp_Image("img");

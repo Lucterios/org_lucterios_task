@@ -51,7 +51,7 @@ $Organisation=getParams($Params,"Organisation",0);
 global $connect;
 $connect->begin();
 try {
-$xfer_result=&new Xfer_Container_Acknowledge("org_lucterios_task","cloneAct",$Params);
+$xfer_result=new Xfer_Container_Acknowledge("org_lucterios_task","cloneAct",$Params);
 $xfer_result->Caption="Cloner";
 //@CODE_ACTION@
 if ($task>0) {

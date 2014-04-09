@@ -44,7 +44,7 @@ if ($task>=0) $self->get($task);
 
 $self->lockRecord("Tasks_APAS_AddModify");
 try {
-$xfer_result=&new Xfer_Container_Custom("org_lucterios_task","Tasks_APAS_AddModify",$Params);
+$xfer_result=new Xfer_Container_Custom("org_lucterios_task","Tasks_APAS_AddModify",$Params);
 $xfer_result->Caption="Ajouter/Modifier une tâche";
 $xfer_result->m_context['ORIGINE']="Tasks_APAS_AddModify";
 $xfer_result->m_context['TABLE_NAME']=$self->__table;

@@ -47,7 +47,7 @@ $contact=getParams($Params,"contact",0);
 $classname=getParams($Params,"classname",0);
 $self=new DBObj_org_lucterios_task_Tasks();
 try {
-$xfer_result=&new Xfer_Container_Acknowledge("org_lucterios_task","Tasks_APAS_SelectRespVal",$Params);
+$xfer_result=new Xfer_Container_Acknowledge("org_lucterios_task","Tasks_APAS_SelectRespVal",$Params);
 $xfer_result->Caption="Selectionner d'un contact comme responsable";
 //@CODE_ACTION@
 list($file,$class_name) = DBObj_Abstract::getTableAndClass($classname);

@@ -41,7 +41,7 @@ require_once('CORE/xfer_custom.inc.php');
 function menuTab($Params)
 {
 try {
-$xfer_result=&new Xfer_Container_Custom("org_lucterios_task","menuTab",$Params);
+$xfer_result=new Xfer_Container_Custom("org_lucterios_task","menuTab",$Params);
 $xfer_result->Caption="";
 //@CODE_ACTION@
 global $SECURITY_LOCK;
